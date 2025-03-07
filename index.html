@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook-Like SPA</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div id="loginPage" class="container">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button onclick="login()">Login</button>
+    </div>
+
+    <div id="profilePage" class="hidden">
+        <div class="profile">
+            <h2>Welcome, <span id="userFullName"></span></h2>
+            <img src="https://via.placeholder.com/150" alt="Profile Picture">
+            <p>Email: <span id="userEmail"></span></p>
+            <p>Location: <span id="userLocation"></span></p>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
