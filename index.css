@@ -1,14 +1,177 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 /* General Styles */
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f2f5;
-    text-align: center;
+    text-align: left;
 }
 
-/* Login Box */
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between; /* Space out logo and navigation */
+    align-items: center; /* Vertically align items in the header */
+    background-color: #111; /* Dark background color */
+    color: white; /* White text color for header elements */
+    padding: 15px 20px; /* Adjust padding for top/bottom and left/right spacing */
+}
+
+/* Logo Styling */
+.logo {
+    font-family: 'Sacramento', cursive; /* Apply the Sacramento font */
+    font-size: 48px; /* Adjust the font size of the logo as needed */
+    color: white; /* Ensure logo text is white */
+    text-decoration: none; /* Remove any default link styling */
+}
+
+/* Navigation Links */
+.nav-links {
+    display: flex; /* Arrange links horizontally */
+    align-items: center; /* Vertically align links */
+}
+
+.nav-links a {
+    color: white; /* White text color for links */
+    text-decoration: none; /* Remove underlines from links */
+    margin-left: 20px; /* Add spacing between the links */
+    font-weight: normal; /* Adjust font weight if needed */
+    font-size: 16px; /* Adjust font size of the links */
+}
+
+.nav-links a:hover {
+    text-decoration: underline; /* Add underline on hover for better interaction */
+}
+
+/* Banner */
+.banner {
+    background: url('banner-image.jpg') no-repeat center center/cover;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+/* Footer */
+.footer {
+    background-color: #003366; /* Dark blue */
+    color: white;
+    padding: 30px 20px;
+    font-family: Arial, sans-serif;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Align items to the top in the container */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    padding-bottom: 20px;
+    border-bottom: 1px solid #336699; /* Add a separator line */
+    margin-bottom: 20px;
+}
+
+.site-links {
+    flex-grow: 1; /* Allow it to take more space */
+    margin-right: 20px; /* Add some spacing between the two main sections */
+}
+
+.site-links h3 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.site-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid; /* Use CSS Grid for the layout */
+    grid-template-columns: repeat(3, auto); /* Create three equal-width columns */
+    gap: 10px 20px; /* Adjust row and column gap as needed */
+    max-width: 500px; /* Adjust max-width as needed */
+}
+
+/* Force the last two items to span across two columns to be on the right */
+.site-links ul li:nth-child(7),
+.site-links ul li:nth-child(8) {
+    grid-column: span 2;
+    justify-self: start; /* Align to the start of the spanned columns */
+}
+
+.site-links ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    display: block; /* Make the entire link clickable */
+}
+
+.site-links ul li a:hover {
+    text-decoration: underline;
+}
+
+.footer-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Align items to the right */
+    gap: 15px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.social-icons img {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.social-icons img:hover {
+    transform: scale(1.1);
+}
+
+/* Mailing List Button */
+.mailing-list-button {
+    background-color: #d9d9d9;
+    color: #003366;
+    padding: 10px 15px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+}
+
+.mailing-list-button:hover {
+    background-color: #ccc;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+    background-color: #3399ff; /* Light blue */
+    color: white;
+    text-align: center;
+    font-size: 12px;
+    padding: 15px 0;
+    margin-top: 20px;
+}
+
+/* Login and Profile Pages */
 .container {
     width: 300px;
-    margin: 100px auto;
+    margin: 80px auto;
     background: white;
     padding: 20px;
     border-radius: 8px;
@@ -28,6 +191,7 @@ button {
     color: white;
     font-size: 16px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
@@ -41,7 +205,7 @@ button:hover {
 /* Profile Display */
 .profiles-container {
     display: flex;
-    flex-direction: column; /* Stack items vertically */
+    flex-direction: column;
     align-items: center;
 }
 
