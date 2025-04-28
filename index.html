@@ -1,13 +1,14 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Facebook-Like SPA</title>
+    <title>Credit Score Portal</title>
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
+
+    <!-- Login Page -->
     <div id="loginPage" class="container">
         <h2>Login</h2>
         <input type="text" id="username" placeholder="Username" required>
@@ -15,15 +16,19 @@
         <button onclick="login()">Login</button>
     </div>
 
+    <!-- Profile Page -->
     <div id="profilePage" class="hidden">
-        <div class="profile">
-            <h2>Welcome, <span id="userFullName"></span></h2>
-            <img src="https://via.placeholder.com/150" alt="Profile Picture">
-            <p>Email: <span id="userEmail"></span></p>
-            <p>Location: <span id="userLocation"></span></p>
-            <button onclick="logout()">Logout</button>
+        <h2>Credit Score</h2>
+        <div id="profilesContainer" class="profiles-container">
+            <!-- User profiles will be displayed here -->
         </div>
+
+        <!-- Last Bank Used Display -->
+        <div id="lastBankUsed" class="last-bank-box"></div>
+
+        <button onclick="logout()">Logout</button>
     </div>
+
     <script src="index.js"></script>
 </body>
 </html>

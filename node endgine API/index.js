@@ -17,17 +17,32 @@ app.get('/api/users', (req, res) => {
         {
             name: "John Doe",
             bank: "ANZ Bank",
-            creditScore: 750
+            creditScore: 300,
+            id: "1",
         },
         {
-            name: "Jane Smith",
+            name: "Jane test",
             bank: "Commonwealth Bank",
-            creditScore: 600
+            creditScore: 650,
+            id: "2",
         },
         {
-            name: "Mike Johnson",
+            name: "Mike kohli",
             bank: "Westpac Bank",
-            creditScore: 400
+            creditScore: 560,
+            id: "3",
+        },
+        {
+            name: "user4",
+            bank: "Commonwealth Bank",
+            creditScore: 200,
+            id: "4",
+        },
+        {
+            name: "user5",
+            bank: "Westpac Bank",
+            creditScore: 388,
+            id: "5",
         }
     ];
     res.json(users);
@@ -40,21 +55,24 @@ app.get('/api/users/details', (req, res) => {
             bank: "ANZ Bank",
             creditScore: 750,
             paymentdefualt: 0,
-            lastbankused: "anz",
+            lastBankUsed: "icici",
+            id: "1",
         },
         {
-            name: "Jane Smith",
+            name: "Jane Test",
             bank: "Commonwealth Bank",
             creditScore: 720,
             paymentdefualt: 2,
-            lastbankused: "anz",
+            lastBankUsed: "hdfc",
+            id: "3",
         },
         {
-            name: "Mike Johnson",
+            name: "Mike Kohli",
             bank: "Westpac Bank",
             creditScore: 680,
             paymentdefualt: 4,
-            lastbankused: "anz",
+            lastBankUsed: "axis",
+            id: "2",
         }
     ];
     res.json(users);
