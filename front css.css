@@ -1,0 +1,445 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fdfdfd;
+}
+
+/* Hero Header */
+.hero {
+    background: url('images/banner.jpg') no-repeat center center/cover;
+    height: 400px;
+    color: #fff;
+    position: relative;
+    padding-top: 20px;
+}
+
+/* Nav Bar */
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+}
+
+.nav h1 {
+    font-size: 24px;
+}
+
+.nav-links a {
+    color: white;
+    margin-left: 20px;
+    text-decoration: none;
+    font-size: 22px;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+/* Logo Styling */
+.logo {
+    font-family: 'Sacramento', cursive; /* Apply the Sacramento font */
+    font-size: 48px; /* Adjust the font size of the logo as needed */
+    color: white; /* Ensure logo text is white */
+    text-decoration: none; /* Remove any default link styling */
+}
+
+/* Search Bar */
+.search-bar {
+    margin: 214px auto 0;
+    max-width: 800px;
+    display: flex;
+    gap: 22px;
+    background: rgba(0, 0, 0, 0);
+    padding: 15px;
+    border-radius: 8px;
+    justify-content: center;
+}
+
+.search-bar input,
+.search-bar select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    flex: 1;
+    min-width: 150px;
+}
+
+.search-bar button {
+    background: #0074cc;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Info Section */
+.info {
+    display: flex;
+    justify-content: space-between;
+    padding: 50px 40px;
+    gap: 40px;
+}
+
+.info .column {
+    flex: 1;
+}
+
+.info h2 {
+    font-size: 38px;
+    color: #0074cc;
+    margin-bottom: 15px;
+}
+
+.info p {
+    font-size: 22px;
+    color: #333;
+}
+
+/* Buttons */
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.buttons button {
+    background-color: #000;
+    color: white;
+    padding: 35px 102px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.buttons button:hover {
+    background-color: #444;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* News Section */
+  .news-section {
+    background: url('images/pexels-shelaghmurphy-1666816.jpg') no-repeat center center/cover;
+    padding: 80px 20px;
+    color: white;
+    position: relative;
+  }
+  
+  .news-overlay {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 10px;
+  }
+  
+  .news-title {
+    text-align: center;
+    font-size: 42px;
+    margin-bottom: 40px;
+    position: relative;
+  }
+  
+  .news-title::after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 4px;
+    background-color: red;
+    margin: 10px auto 0;
+    border-radius: 2px;
+  }
+  
+  .news-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+  }
+  
+  .news-card {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .news-card h3 {
+    font-size: 29px;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+  
+  .news-card p {
+    font-size: 16px;
+    color: #ddd;
+  }
+  /* Info Section */
+.info {
+    padding: 50px 40px;
+    background-color: #fff;
+  }
+  
+  .info h2 {
+    font-size: 38px;
+    color: #0074cc;
+    margin-bottom: 15px;
+  }
+  
+  .info p {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  .info-section {
+  display: flex;
+  gap: 40px;
+  padding: 50px;
+  align-items: flex-start;
+  background-color: #fff;
+  flex-wrap: wrap;
+}
+
+.info-image {
+  flex: 1;
+  min-width: 300px;
+}
+
+.info-image img {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.info-text {
+  flex: 2;
+}
+
+.info-text h2 {
+  font-size: 32px;
+  color: #0074cc;
+  margin-bottom: 20px;
+}
+
+.info-text p {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+
+
+
+
+
+
+
+/* Services Section */
+.services-section {
+    display: flex;
+    gap: 40px;
+    padding: 50px;
+    align-items: flex-start;
+    background-color: #fff;
+    flex-wrap: wrap;
+  }
+  
+  .services-image {
+    flex: 1;
+    min-width: 300px;
+  }
+  
+  .services-image img {
+    width: 103%;
+    height: 425%;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+  
+  .services-text {
+    flex: 2;
+  }
+  
+  .services-text h2 {
+    font-size: 47px;
+    color: #0074cc;
+    margin-bottom: 20px;
+  }
+  
+  .services-text p {
+    font-size: 23px;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+
+
+
+
+
+
+
+
+
+ .footer {
+  background-color: #222;
+  color: #fff;
+  padding: 40px 20px 0;
+  font-size: 16px;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+.footer-links ul li {
+  margin-bottom: 10px;
+}
+
+.footer-links ul li a {
+  color: #ccc;
+  text-decoration: none;
+}
+
+.footer-links ul li a:hover {
+  text-decoration: underline;
+}
+
+.footer-social {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.footer-social img {
+  width: 30px;
+  height: 30px;
+}
+
+.footer-subscribe button {
+  background-color: #0074cc;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.footer-subscribe button:hover {
+  background-color: #005fa3;
+}
+
+.footer-bottom {
+  background-color: #0074cc;
+  text-align: center;
+  padding: 15px;
+  margin-top: 30px;
+  color: white;
+  font-size: 14px;
+}
+
+.site-links {
+    flex-grow: 1; /* Allow it to take more space */
+    margin-right: 20px; /* Add some spacing between the two main sections */
+}
+
+.site-links h3 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.site-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid; /* Use CSS Grid for the layout */
+    grid-template-columns: repeat(3, auto); /* Create three equal-width columns */
+    gap: 10px 20px; /* Adjust row and column gap as needed */
+    max-width: 500px; /* Adjust max-width as needed */
+}
+
+/* Force the last two items to span across two columns to be on the right */
+.site-links ul li:nth-child(7),
+.site-links ul li:nth-child(8) {
+    grid-column: span 2;
+    justify-self: start; /* Align to the start of the spanned columns */
+}
+
+.site-links ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    display: block; /* Make the entire link clickable */
+}
+
+.site-links ul li a:hover {
+    text-decoration: underline;
+}
+
+.footer-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Align items to the right */
+    gap: 15px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.social-icons img {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.social-icons img:hover {
+    transform: scale(1.1);
+}
+
+/* Mailing List Button */
+.mailing-list-button {
+    background-color: #d9d9d9;
+    color: #003366;
+    padding: 10px 15px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+}
+
+.mailing-list-button:hover {
+    background-color: #ccc;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+    background-color: #3399ff; /* Light blue */
+    color: white;
+    text-align: center;
+    font-size: 12px;
+    padding: 15px 0;
+    margin-top: 20px;
+}
