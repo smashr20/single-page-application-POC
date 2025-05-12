@@ -8,28 +8,10 @@
 </head>
 <body>
 
-  <header class="hero">
-    <div class="nav">
-        <a href="#" class="logo">Vocals</a>
-      <div class="nav-links">
-        <a href="#">Sign In</a>
-        <a href="#">Sign Up</a>
-        <a href="#">Add New Listing</a>
-      </div>
-    </div>
+  <!-- HEADER PLACEHOLDER -->
+  <div id="header-placeholder"></div>
 
-    <div class="search-bar">
-      <input type="text" placeholder="What are you looking for?" />
-      <select>
-        <option>Category</option>
-        <option>Entertainers</option>
-        <option>Bands</option>
-      </select>
-      <input type="text" placeholder="Search, City or Suburb" />
-      <button>Search</button>
-    </div>
- <header>
-
+  <!-- Main Info Section -->
   <section class="info">
     <div class="column">
       <h2>Australia’s Leading Entertainment Directory and Booking Service</h2>
@@ -79,10 +61,13 @@
           </div>
           <div class="news-card">
             <h3>From the Steps to the Streets, Here’s How...</h3>
-            As celebs arrive to fashion’s biggest night, E! has you covered with all the couture inspo you can wear IRL spotted from this year’s “Superfine” theme in New York City.          </div>
+            <p>As celebs arrive to fashion’s biggest night, E! has you covered with all the couture inspo you can wear IRL spotted from this year’s “Superfine” theme in New York City.</p>
+          </div>
       </div>
     </div>
   </section>
+
+  <!-- Services Section -->
   <section class="services-section">
     <div class="services-image">
       <img src="images/band.jpg" alt="Live performance" />
@@ -91,82 +76,33 @@
       <h2>Your One Stop Entertainment Booking Services</h2>
       <p>
         Check out our sensational selection of Australian cover bands and musicians for hire or laugh out loud with Australia's top male and female stand up comedians. Corporate entertainment is a speciality and our professional speakers' bureau includes only the very finest inspirational and motivational conference speakers in Australia. We also have great range of wedding entertainment including wedding DJ's, comperes & MCs and party bands and much much more. Book online now!
-        We make entertainment hire across Australia easy, because we've got all of the options available in one place. With our website you can browse every type of performer you can imagine, including some you've probably never ever thought of. Once you've decided, it's straightforward to book the chosen entertainment with an uncomplicated click of a button.
       </p>
       <p>
         With over 20 years experience in Corporate, Public Events, Special Event Entertainment, Wedding, Private Functions, Vocals can offer you all styles and genres of entertainment available. No event is too large or too small as you will find entertainers for all budgets and events.
-    </p>
-       <p> The greatest and largest range of quality acts, artists, speakers and services in Australia   </p>   </p>
-      <!-- Add more paragraphs as needed -->
+      </p>
+      <p>
+        The greatest and largest range of quality acts, artists, speakers and services in Australia.
+      </p>
     </div>
   </section>
-  
- 
-  <footer class="footer">
-    <div class="footer-content">
-      <div class="footer-links">
-        <ul>
-          <li><a href="#">Exhibitions</a></li>
-          <li><a href="#">Events</a></li>
-          <li><a href="#">Calendar</a></li>
-          <li><a href="#">Speakers</a></li>
-          <li><a href="#">Blog</a></li>
-          <li><a href="#">Terms & Conditions</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-        </ul>
-      </div>
-  
-      <div class="footer-social">
-        <a href="#"><img src="images/yt.png" alt="YouTube" /></a>
-        <a href="#"><img src="images/fb.png" alt="Facebook" /></a>
-        <a href="#"><img src="images/google.png" alt="Google" /></a>
-      </div>
-  
-      <div class="footer-subscribe">
-           </div>
-    </div>
-  
-    <div class="footer-bottom">
-      <p>COPYRIGHT © Trade Fair Pty Ltd. All rights reserved. Professional Event Planning Services.</p>
-    </div>
-  </footer>
-  
 
-  
+  <!-- FOOTER PLACEHOLDER -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Load header and footer with JavaScript -->
+  <script>
+    fetch('header.html')
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById('header-placeholder').innerHTML = data;
+      });
+
+    fetch('footer.html')
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById('footer-placeholder').innerHTML = data;
+      });
+  </script>
+
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-    
-  
-
-
-
-
-
-
-

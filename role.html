@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Select Role - Vocals</title>
+  <link rel="stylesheet" href="front css.css" />
+  <header class="hero">
+    <div class="nav">
+      <a href="#" class="logo">Vocals</a>
+      <div class="nav-links">
+        <!-- Change these hrefs to your roles page -->
+        <a href="select-role.html">Sign In</a>
+        <a href="select-role.html">Sign Up</a>
+        <a href="select-role.html">Add New Listing</a>
+      </div>
+    </div>
+</head>
+<body>
+
+  <!-- Placeholder for shared header -->
+  <div id="header-placeholder"></div>
+
+  <!-- Role selection content -->
+  <section class="role-selection">
+    <h2>Getting started with <span class="highlight">Vocals</span> is quick and easy.<br>How would you like to describe yourself ?</h2>
+
+    <div class="role-cards">
+      <div class="role-card">
+        <img src="images/guitar.png" alt="Guitar Icon" />
+        <h3>Entertainer/Speaker</h3>
+        <a href="register-entertainer.html" class="btn">Register</a>
+      </div>
+
+      <div class="role-card">
+        <img src="images/audience.png" alt="Audience Icon" />
+        <h3>Audience - Customer</h3>
+        <a href="register-customer.html" class="btn">Register</a>
+      </div>
+
+      <div class="role-card">
+        <img src="images/admin.png" alt="Admin Icon" />
+        <h3>Admin</h3>
+        <a href="admin-login.html" class="btn">Log in</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Placeholder for shared footer -->
+  <div id="footer-placeholder"></div>
+
+  <!-- JavaScript to load header and footer -->
+  <script>
+    
+    fetch("footer.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById('footer-placeholder').innerHTML = data;
+      });
+  </script>
+
+</body>
+</html>
