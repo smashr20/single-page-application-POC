@@ -3,7 +3,7 @@
     background-size: cover;
     background-position: center;
     padding: 20px 0;
-    position: fixed;
+    position: absolute;
     top: 0 ;
     left: 0;
     z-index: 1000;
@@ -25,7 +25,7 @@
 }
 
 .logo h1 {
-    font-family: 'Brush Script MT', cursive;
+    font-family: 'Sacramento', cursive; /* Apply the Sacramento font */
     color: white;
     font-size: 48px;
     margin: 0;

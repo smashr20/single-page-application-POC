@@ -131,24 +131,73 @@ loadHTML("intro", "./components/Intro/intro.html");
 loadHTML("news", "./components/News/news.html");
 loadHTML("booking", "./components/Booking/booking.html");
 loadHTML("easyhire", "./components/Easyhire/easyhire.html");
+loadHTML("register", "./components/Register/register.html");
 // loadHTML("login", "./components/Login/login.html");
 // Load pages dynamically based on hash
+// function loadPage() {
+//   const hash = location.hash.substring(1) || "error";
+//   loadHTML("content", `./components/${capitalizeFirstLetter(hash)}/${hash}.html`);
+
+//   // Get all sections that should be hidden during login
+//   const sectionsToHide = ["intro", "news", "booking", "easyhire"];
+
+//   // Hide or show sections based on hash
+//   sectionsToHide.forEach(sectionId => {
+//     const section = document.getElementById(sectionId);
+//     if (section) {
+//       if (hash === "login") {
+//         section.style.display = "none";
+//       } else {
+//         section.style.display = "block";
+//       }
+//     }
+//   });
+// }
+
 function loadPage() {
   const hash = location.hash.substring(1) || "error";
   loadHTML("content", `./components/${capitalizeFirstLetter(hash)}/${hash}.html`);
 
-  // Get all sections that should be hidden during login
-  const sectionsToHide = ["intro", "news", "booking", "easyhire"];
+  // Define sections to hide for different routes
+  const sectionVisibility = {
+    'login': {
+      hide: ["intro", "news", "booking", "easyhire", "hero"],
+      show: ["content"]
+    },
+    'signup': {
+      hide: ["intro", "news", "booking", "easyhire", "hero", "content"],
+      show: ["register", "hero"]
+    },
+    'booking': {
+      hide: ["intro", "news", "easyhire"],
+      show: ["hero", "content"]
+    },
+    'profile': {
+      hide: ["intro", "hero", "easyhire"],
+      show: ["news", "booking", "content"]
+    },
+    'default': {
+      hide: ["easyhire", "register"],
+      show: ["hero", "intro", "news", "booking", "content",]
+    }
+  };
 
-  // Hide or show sections based on hash
-  sectionsToHide.forEach(sectionId => {
+  // Get the visibility configuration for current route
+  const visibility = sectionVisibility[hash] || sectionVisibility.default;
+
+  // Hide sections
+  visibility.hide.forEach(sectionId => {
     const section = document.getElementById(sectionId);
     if (section) {
-      if (hash === "login") {
-        section.style.display = "none";
-      } else {
-        section.style.display = "block";
-      }
+      section.style.display = "none";
+    }
+  });
+
+  // Show sections
+  visibility.show.forEach(sectionId => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.style.display = "block";
     }
   });
 }
