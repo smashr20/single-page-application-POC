@@ -1,0 +1,60 @@
+.main-header {
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    padding: 20px 0;
+    position: fixed;
+    top: 0 ;
+    left: 0;
+    z-index: 1000;
+    background-color: rgba(0, 86, 179, 0.19);
+}
+
+.nav-container {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    z-index: 1;
+}
+
+.logo h1 {
+    font-family: 'Brush Script MT', cursive;
+    color: white;
+    font-size: 48px;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+    z-index: 1;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    font-weight: 500;
+    transition: opacity 0.3s ease;
+}
+
+.nav-link:hover {
+    opacity: 0.8;
+}
+
+.nav-link.highlight {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+.nav-link.highlight:hover {
+    background: rgba(255, 255, 255, 0.3);
+}

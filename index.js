@@ -93,3 +93,66 @@ function logout() {
     document.getElementById("profilePage").classList.add("hidden");
     document.getElementById("lastBankUsed").innerHTML = ''; // Clear last bank used info
 }
+
+// Updated utility function to load external HTML and CSS
+function loadHTML(id, file) {
+  const basePath = file.substring(0, file.lastIndexOf('/'));
+  const componentName = file.split('/').pop().split('.')[0];
+  const cssFile = `${basePath}/${componentName}.css`;
+
+  // Load HTML
+  fetch(file)
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById(id).innerHTML = data;
+      
+      // Load associated CSS
+      const existingLink = document.querySelector(`link[href="${cssFile}"]`);
+      if (!existingLink) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = cssFile;
+        document.head.appendChild(link);
+      }
+    })
+    .catch(err => document.getElementById(id).innerHTML = "<p>Error loading " + file + "</p>");
+}
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+// Load static parts (header/footer)
+loadHTML("header", "./components/Header/header.html");
+loadHTML("footer", "./components/Footer/footer.html");
+loadHTML("hero", "./components/Hero/hero.html");
+loadHTML("intro", "./components/Intro/intro.html");
+loadHTML("news", "./components/News/news.html");
+loadHTML("booking", "./components/Booking/booking.html");
+loadHTML("easyhire", "./components/Easyhire/easyhire.html");
+// loadHTML("login", "./components/Login/login.html");
+// Load pages dynamically based on hash
+function loadPage() {
+  const hash = location.hash.substring(1) || "error";
+  loadHTML("content", `./components/${capitalizeFirstLetter(hash)}/${hash}.html`);
+
+  // Get all sections that should be hidden during login
+  const sectionsToHide = ["intro", "news", "booking", "easyhire"];
+
+  // Hide or show sections based on hash
+  sectionsToHide.forEach(sectionId => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      if (hash === "login") {
+        section.style.display = "none";
+      } else {
+        section.style.display = "block";
+      }
+    }
+  });
+}
+
+window.addEventListener("hashchange", loadPage);
+window.addEventListener("load", loadPage);
+

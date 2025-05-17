@@ -3,48 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join Us</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="index.css">
+    <title>Vocals - Entertainment Booking</title>
+    <link rel="stylesheet" href="./index.css">
 </head>
 <body>
-
     <div id="header"></div>
-
-    <section class="banner">
-        <h1>Join Us</h1>
-    </section>
-
-    <div id="loginPage" class="container">
-        <h2>Login</h2>
-        <input type="text" id="username" placeholder="Username" required>
-        <input type="password" id="password" placeholder="Password" required>
-        <button onclick="login()">Login</button>
-    </div>
-
-    <div id="profilePage" class="container hidden">
-        <h2>Credit Score</h2>
-        <div id="profilesContainer" class="profiles-container"></div>
-        <div id="lastBankUsed" class="last-bank-box"></div>
-        <button onclick="logout()">Logout</button>
-    </div>
-
+    <main>
+        <div id="hero"></div>
+        <div id="easyhire"></div>
+        <div id="intro"></div>
+        <div id="news"></div>
+        <div id="booking"></div>
+        <div id="login"></div>
+        <div id="content"></div>
+    </main>
     <div id="footer"></div>
-
     <script src="index.js"></script>
-    <script>
-        // Load header and footer using AJAX
-        function loadHTML(id, url) {
-            fetch(url)
-                .then(response => response.text())
-                .then(data => document.getElementById(id).innerHTML = data)
-                .catch(error => console.error('Error loading HTML:', error));
-        }
-
-        loadHTML('header', 'header.html');
-        loadHTML('footer', 'footer.html');
-    </script>
-
 </body>
 </html>
