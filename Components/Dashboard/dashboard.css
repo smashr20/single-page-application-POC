@@ -1,0 +1,101 @@
+.dashboard-page {
+    min-height: 100vh;
+    background: #f5f5f5;
+}
+
+.dashboard-header {
+    background: rgba(0, 86, 179, 0.19);
+    backdrop-filter: blur(10px);
+    padding: 1rem 2rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo a {
+    color: white;
+    text-decoration: none;
+    font-size: 2rem;
+    font-family: 'Dancing Script', cursive;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: white;
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.dashboard-content {
+    padding: 6rem 2rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.dashboard-content h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.dashboard-card {
+    text-decoration: none;
+    padding: 2rem;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+}
+
+.bookings { background-color: #2ecc71; }
+.account { background-color: #f1c40f; }
+.messages { background-color: #9b59b6; }
+
+.dashboard-card h2 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.card-content i {
+    font-size: 2.5rem;
+}
+
+@media (max-width: 768px) {
+    .dashboard-content {
+        padding: 5rem 1rem 1rem;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}

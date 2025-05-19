@@ -132,6 +132,45 @@ loadHTML("news", "./components/News/news.html");
 loadHTML("booking", "./components/Booking/booking.html");
 loadHTML("easyhire", "./components/Easyhire/easyhire.html");
 loadHTML("register", "./components/Register/register.html");
+loadHTML("dashboard", "./components/Dashboard/dashboard.html");
+// Add this with your other loadHTML calls at the top
+loadHTML("dashboard", "./Components/Dashboard/dashboard.html");
+function loadPage() {
+  const hash = location.hash.substring(1) || "home";
+  loadHTML("content", `./components/${capitalizeFirstLetter(hash)}/${hash}.html`);
+
+  const sectionVisibility = {
+    // ...existing code...
+    'login': {
+      hide: ["intro", "news", "booking", "hero"],
+      show: ["content"]
+    },
+    'dashboard': {
+      hide: ["intro", "news", "booking", "hero", "signup", "register", "login"],
+      show: ["content"]
+    }
+    // ...existing code...
+  };
+
+  // Get the visibility configuration for current route
+  const visibility = sectionVisibility[hash] || sectionVisibility.default;
+  
+  // Hide sections
+  visibility.hide.forEach(sectionId => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.style.display = "none";
+    }
+  });
+
+  // Show sections
+  visibility.show.forEach(sectionId => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.style.display = "block";
+    }
+  });
+}
 // loadHTML("login", "./components/Login/login.html");
 // Load pages dynamically based on hash
 // function loadPage() {
@@ -160,26 +199,34 @@ function loadPage() {
 
   // Define sections to hide for different routes
   const sectionVisibility = {
+    'home': {
+      hide: ["signup", "register"],
+      show: ["hero", "intro", "news", "booking", "content"]
+    },
     'login': {
-      hide: ["intro", "news", "booking", "easyhire", "hero"],
+      hide: ["intro", "news", "booking", "hero"],
       show: ["content"]
     },
     'signup': {
-      hide: ["intro", "news", "booking", "easyhire", "hero", "content"],
+      hide: ["intro", "news", "booking", "hero", "content"],
       show: ["register", "hero"]
     },
     'booking': {
-      hide: ["intro", "news", "easyhire"],
+      hide: ["intro", "news"],
       show: ["hero", "content"]
     },
     'profile': {
-      hide: ["intro", "hero", "easyhire"],
+      hide: ["intro", "hero"],
       show: ["news", "booking", "content"]
     },
     'default': {
-      hide: ["easyhire", "register"],
-      show: ["hero", "intro", "news", "booking", "content",]
-    }
+      hide: ["register"],
+      show: ["hero", "intro", "news", "booking", "content"]
+    },
+    'dashboard': {
+        hide: ["intro", "news", "booking", "hero", "signup", "register"],
+        show: ["content"]
+    },
   };
 
   // Get the visibility configuration for current route
