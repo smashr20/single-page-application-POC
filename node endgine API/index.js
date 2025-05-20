@@ -1,14 +1,17 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const port = 3000;
+app.use(express.json());
+app.use(cors());
 
 app.post('/api/login', (req, res) => {
     console.log(req.body)
-    const { name, password } = req.body;
-    if (!name || !password) {
+    const { email, password } = req.body;
+    if (!email || !password) {
         return res.status(400).json({ error: "Name and password are required" });
     }
-    res.json({ message: "Login successful", user: { name } });
+    res.json({ message: "Login successful", user: { email } });
 });
 
 

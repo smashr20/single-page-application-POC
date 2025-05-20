@@ -23,6 +23,11 @@
 
 .logo {
     z-index: 1;
+    cursor: pointer;
+}
+
+.logo-link {
+    text-decoration: none;
 }
 
 .logo h1 {

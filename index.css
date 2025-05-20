@@ -15,3 +15,44 @@ body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
 }
+
+.global-spinner {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.7);
+}
+
+.spinner-music {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 8px solid #a259ff;
+    border-top: 8px solid #fff;
+    animation: spin 1s linear infinite;
+    position: relative;
+    box-shadow: 0 0 20px #a259ff88;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spinner-music::after {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 30px;
+    background: url('https://cdn-icons-png.flaticon.com/512/727/727245.png') center/contain no-repeat;
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.85;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}

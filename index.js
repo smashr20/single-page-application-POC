@@ -99,6 +99,7 @@ function loadHTML(id, file) {
   const basePath = file.substring(0, file.lastIndexOf('/'));
   const componentName = file.split('/').pop().split('.')[0];
   const cssFile = `${basePath}/${componentName}.css`;
+  const jsFile = `${basePath}/${componentName}.js`;
 
   // Load HTML
   fetch(file)
@@ -115,8 +116,27 @@ function loadHTML(id, file) {
         link.href = cssFile;
         document.head.appendChild(link);
       }
+
+      // Load associated JS
+      const existingScript = document.querySelector(`script[src="${jsFile}"]`);
+      if (!existingScript) {
+        fetch(jsFile, { method: 'HEAD' })
+          .then(resp => {
+            if (resp.ok) {
+              const script = document.createElement('script');
+              script.type = 'application/javascript';
+              script.src = jsFile;
+              document.body.appendChild(script);
+            }
+          });
+      }
     })
-    .catch(err => document.getElementById(id).innerHTML = "<p>Error loading " + file + "</p>");
+    .catch(err => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.innerHTML = "<p>Error loading " + file + "</p>";
+      }
+    });
 }
 
 function capitalizeFirstLetter(string) {
@@ -134,64 +154,15 @@ loadHTML("easyhire", "./components/Easyhire/easyhire.html");
 loadHTML("register", "./components/Register/register.html");
 loadHTML("dashboard", "./components/Dashboard/dashboard.html");
 // Add this with your other loadHTML calls at the top
-loadHTML("dashboard", "./Components/Dashboard/dashboard.html");
-function loadPage() {
-  const hash = location.hash.substring(1) || "home";
-  loadHTML("content", `./components/${capitalizeFirstLetter(hash)}/${hash}.html`);
 
-  const sectionVisibility = {
-    // ...existing code...
-    'login': {
-      hide: ["intro", "news", "booking", "hero"],
-      show: ["content"]
-    },
-    'dashboard': {
-      hide: ["intro", "news", "booking", "hero", "signup", "register", "login"],
-      show: ["content"]
-    }
-    // ...existing code...
-  };
-
-  // Get the visibility configuration for current route
-  const visibility = sectionVisibility[hash] || sectionVisibility.default;
-  
-  // Hide sections
-  visibility.hide.forEach(sectionId => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.style.display = "none";
-    }
-  });
-
-  // Show sections
-  visibility.show.forEach(sectionId => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.style.display = "block";
-    }
-  });
-}
-// loadHTML("login", "./components/Login/login.html");
-// Load pages dynamically based on hash
-// function loadPage() {
-//   const hash = location.hash.substring(1) || "error";
-//   loadHTML("content", `./components/${capitalizeFirstLetter(hash)}/${hash}.html`);
-
-//   // Get all sections that should be hidden during login
-//   const sectionsToHide = ["intro", "news", "booking", "easyhire"];
-
-//   // Hide or show sections based on hash
-//   sectionsToHide.forEach(sectionId => {
-//     const section = document.getElementById(sectionId);
-//     if (section) {
-//       if (hash === "login") {
-//         section.style.display = "none";
-//       } else {
-//         section.style.display = "block";
-//       }
-//     }
-//   });
-// }
+window.addEventListener("load", () => {
+  // Check if user is logged in
+  if (localStorage.getItem('isLoggedin') === 'true') {
+    window.location.hash = '#dashboard';
+  } else {
+    loadPage();
+  }
+});
 
 function loadPage() {
   const hash = location.hash.substring(1) || "error";
@@ -204,12 +175,12 @@ function loadPage() {
       show: ["hero", "intro", "news", "booking", "content"]
     },
     'login': {
-      hide: ["intro", "news", "booking", "hero"],
-      show: ["content"]
+      hide: ["intro", "news", "booking", "hero", "signup", "register"],
+      show: ["content", "hero"]
     },
     'signup': {
-      hide: ["intro", "news", "booking", "hero", "content"],
-      show: ["register", "hero"]
+      hide: ["intro", "news", "booking", "hero", "register"],
+      show: ["hero", "content"]
     },
     'booking': {
       hide: ["intro", "news"],
@@ -224,9 +195,13 @@ function loadPage() {
       show: ["hero", "intro", "news", "booking", "content"]
     },
     'dashboard': {
-        hide: ["intro", "news", "booking", "hero", "signup", "register"],
-        show: ["content"]
+        hide: ["intro", "news", "booking", "signup", "register"],
+        show: ["content", "hero"]
     },
+    'register': {
+        hide: ["intro", "news", "booking", "hero", "register"],
+        show: ["content", "hero"]
+    }
   };
 
   // Get the visibility configuration for current route

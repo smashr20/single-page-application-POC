@@ -1,4 +1,4 @@
 function registerAs(userType) {
-    sessionStorage.setItem('userType', userType);
+    localStorage.setItem('userType', userType);
     window.location.hash = 'register';
 }

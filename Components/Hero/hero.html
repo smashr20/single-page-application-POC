@@ -1,12 +1,17 @@
 <section class="hero-section">
-    <div class="search-container">
+    <!-- Join us banner start -->
+    <div class="join-us-banner" id="join-us-banner">
+        <h1>Join Us</h1>
+    </div>
+    <!-- Join us banner ender -->
+    <form class="search-container" id="search-container">
         <div class="search-group">
             <label>What</label>
-            <input type="text" placeholder="What are you looking for?" class="search-input">
+            <input type="text" name="what" placeholder="What are you looking for?" class="search-input" required>
         </div>
         <div class="search-group">
             <label>Classification</label>
-            <select class="search-input">
+            <select name="classification" class="search-input" required>
                 <option value="">Category</option>
                 <option value="entertainers">Entertainers</option>
                 <option value="bands">Bands</option>
@@ -15,8 +20,8 @@
         </div>
         <div class="search-group">
             <label>Where</label>
-            <input type="text" placeholder="Suburb, City or Region" class="search-input">
+            <input type="text" name="where" placeholder="Suburb, City or Region" class="search-input" required>
         </div>
-        <a href="#easyhire" class="search-button">Search</a>
-    </div>    
+        <button type="submit" class="search-button">Search</button>
+    </form>    
 </section>
