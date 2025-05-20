@@ -50,9 +50,42 @@
     color: #666;
 }
 
+.search-button {
+    padding: 12px 30px;
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    white-space: nowrap;
+    min-width: 100px;
+    text-align: center;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-button:hover {
+    background-color: #0052a3;
+}
+
 @media (max-width: 768px) {
     .search-container {
         flex-direction: column;
         gap: 15px;
+        margin-top: 150px;
+    }
+
+    .search-button {
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    .hero-section {
+        min-height: 500px;
     }
 }
