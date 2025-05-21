@@ -1,14 +1,21 @@
 <header class="main-header">
-    <nav class="nav-container">
-        <div class="logo">
-            <a href="#home" class="logo-link">
-                <h1>Vocals</h1>
-            </a>
-        </div>
-        <div class="nav-links">
-            <a href="#login" class="nav-link">Sign In</a>
-            <a href="#signup" class="nav-link">Sign Up</a>
-            <a href="#add-listing" class="nav-link highlight">Add New Listing</a>
-        </div>
-    </nav>
+  <nav class="nav-container">
+    <div class="logo">
+      <a href="#home" class="logo-link">
+        <h1>Vocals</h1>
+      </a>
+    </div>
+    <div class="nav-links" id="nav-links">
+      <a href="#login" class="nav-link" id="nav-signin">Sign In</a>
+      <a href="#signup" class="nav-link" id="nav-signup">Sign Up</a>
+      <a href="#add-listing" class="nav-link highlight" id="nav-listing">Add New Listing</a>
+    </div>
+    <div class="user-info" id="user-info" style="display: none;">
+      <img id="profile-img-header" src="https://i.pravatar.cc/32" alt="Profile" class="profile-img" />
+      <span id="user-name"></span>
+      <button id="logout-btn" title="Logout" style="border: none; background: none; cursor: pointer;">
+        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828479.png" alt="Logout" style="width: 20px;" />
+      </button>
+    </div>
+  </nav>
 </header>

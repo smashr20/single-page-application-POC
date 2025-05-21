@@ -1,85 +1,124 @@
 const express = require('express');
 const cors = require('cors');
+const db = require('./db'); // ← import MySQL connection
+
 const app = express();
 const port = 3000;
-app.use(express.json());
+
 app.use(cors());
+app.use(express.json());
+
+app.get('/', async (req, res) => {
+    try {
+        console.log("server is up.");
+        res.send("Server is running");
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.get('/api/setup', (req, res) => {
+  createAllTables((err, message) => {
+    if (err) {
+      console.error("Setup failed:", err.message);
+      return res.status(500).json({ error: err.message });
+    }
+
+    console.log("Setup complete:", message);
+    res.status(200).json({ message });
+  });
+});
+
+app.post('/api/signup', (req, res) => {
+  console.log('hit signup');
+
+  const {
+    name,
+    address,
+    country,
+    state,
+    postcode,
+    mobile,
+    email,
+    password,
+    confirmPassword,
+    website,
+    role
+  } = req.body;
+
+  // Basic validation
+  if (
+    !name || !address || !country || !state || !postcode ||
+    !mobile || !email || !password || !confirmPassword || !role
+  ) {
+    return res.status(400).json({ error: "All fields except website are required." });
+  }
+
+  if (password !== confirmPassword) {
+    return res.status(400).json({ error: "Passwords do not match." });
+  }
+
+  const allowedRoles = ['entertainer', 'customer', 'admin'];
+  if (!allowedRoles.includes(role)) {
+    return res.status(400).json({ error: "Invalid role specified." });
+  }
+
+  const insertQuery = `
+    INSERT INTO users (name, address, country, state, postcode, mobile, email, password, website, role)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+
+  db.query(
+    insertQuery,
+    [name, address, country, state, postcode, mobile, email, password, website || '', role],
+    (err, result) => {
+      if (err) {
+        if (err.code === 'ER_DUP_ENTRY') {
+          return res.status(409).json({ error: "Email already exists." });
+        }
+        return res.status(500).json({ error: err.message });
+      }
+
+      res.status(201).json({
+        message: "User registered successfully.",
+        userId: result.insertId
+      });
+    }
+  );
+});
+
 
 app.post('/api/login', (req, res) => {
-    console.log(req.body)
-    const { email, password } = req.body;
-    if (!email || !password) {
-        return res.status(400).json({ error: "Name and password are required" });
+    console.log('hit login');
+
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ error: "Email and password are required." });
+  }
+
+  const query = `SELECT id, name, email, role FROM users WHERE email = ? AND password = ?`;
+
+  db.query(query, [email, password], (err, results) => {
+    if (err) {
+      console.error("Login error:", err.message);
+      return res.status(500).json({ error: "Internal server error." });
     }
-    res.json({ message: "Login successful", user: { email } });
+
+    if (results.length === 0) {
+      return res.status(401).json({ error: "Invalid email or password." });
+    }
+
+    const user = results[0];
+    res.status(200).json({
+      message: "Login successful",
+      user: user // includes id, name, email, role
+    });
+  });
 });
 
 
-app.get('/api/users', (req, res) => {
-    const users = [
-        {
-            name: "John Doe",
-            bank: "ANZ Bank",
-            creditScore: 300,
-            id: "1",
-        },
-        {
-            name: "Jane test",
-            bank: "Commonwealth Bank",
-            creditScore: 650,
-            id: "2",
-        },
-        {
-            name: "Mike kohli",
-            bank: "Westpac Bank",
-            creditScore: 560,
-            id: "3",
-        },
-        {
-            name: "user4",
-            bank: "Commonwealth Bank",
-            creditScore: 200,
-            id: "4",
-        },
-        {
-            name: "user5",
-            bank: "Westpac Bank",
-            creditScore: 388,
-            id: "5",
-        }
-    ];
-    res.json(users);
-});
 
-app.get('/api/users/details', (req, res) => {
-    const users = [
-        {
-            name: "John Doe",
-            bank: "ANZ Bank",
-            creditScore: 750,
-            paymentdefualt: 0,
-            lastBankUsed: "icici",
-            id: "1",
-        },
-        {
-            name: "Jane Test",
-            bank: "Commonwealth Bank",
-            creditScore: 720,
-            paymentdefualt: 2,
-            lastBankUsed: "hdfc",
-            id: "3",
-        },
-        {
-            name: "Mike Kohli",
-            bank: "Westpac Bank",
-            creditScore: 680,
-            paymentdefualt: 4,
-            lastBankUsed: "axis",
-            id: "2",
-        }
-    ];
-    res.json(users);
-});
 
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
