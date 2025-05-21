@@ -1,0 +1,114 @@
+<head>
+  <link rel="stylesheet" href="./dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+  <div id="header"></div>
+  <div id="hero"></div>
+
+  <main class="dashboard-content">
+    <h1>Dashboard</h1>
+    <div class="dashboard-grid">
+      <a href="#" class="dashboard-card bookings">
+        <h2>Bookings</h2>
+        <div class="card-content">
+          <i class="fas fa-calendar"></i>
+        </div>
+      </a>
+
+      <a href="#" class="dashboard-card account">
+        <h2>My Account</h2>
+        <div class="card-content">
+          <i class="fas fa-user"></i>
+        </div>
+      </a>
+
+      <a href="#" class="dashboard-card messages">
+        <h2>Messages</h2>
+        <div class="card-content">
+          <i class="fas fa-envelope"></i>
+        </div>
+      </a>
+    </div>
+  </main>
+
+  <div id="footer"></div>
+
+  <script>
+    function loadHTML(id, file, callback) {
+      fetch(file)
+        .then(res => res.text())
+        .then(data => {
+          document.getElementById(id).innerHTML = data;
+
+          // 🔄 Load CSS if exists
+          const cssFile = file.replace(".html", ".css");
+          const existingLink = document.querySelector(`link[href="${cssFile}"]`);
+          if (!existingLink) {
+            fetch(cssFile, { method: "HEAD" }).then(resp => {
+              if (resp.ok) {
+                const link = document.createElement("link");
+                link.rel = "stylesheet";
+                link.href = cssFile;
+                document.head.appendChild(link);
+              }
+            });
+          }
+
+          if (callback) callback();
+        });
+    }
+
+    function updateHeaderLinksForLogin() {
+      const isLoggedIn = localStorage.getItem("isLoggedin") === "true";
+      const user = JSON.parse(localStorage.getItem("loggedInUser"));
+
+      const signInLink = document.getElementById("nav-signin");
+      const signUpLink = document.getElementById("nav-signup");
+      const addListingLink = document.getElementById("nav-listing");
+      const userInfo = document.getElementById("user-info");
+      const userName = document.getElementById("user-name");
+      const profileImg = document.getElementById("profile-img-header");
+      const logoutBtn = document.getElementById("logout-btn");
+
+      if (isLoggedIn && user) {
+        if (signInLink) signInLink.style.display = "none";
+        if (signUpLink) signUpLink.style.display = "none";
+        if (addListingLink) addListingLink.style.display = "none";
+
+        if (userInfo && userName) {
+          userInfo.style.display = "flex";
+          userName.textContent = user.name;
+        }
+
+        if (profileImg) {
+          profileImg.style.cursor = "pointer";
+          profileImg.onclick = () => {
+            history.pushState({}, "", "/dashboard");
+            location.reload();
+          };
+        }
+
+        if (logoutBtn) {
+          logoutBtn.addEventListener("click", () => {
+            localStorage.removeItem("loggedInUser");
+            localStorage.removeItem("isLoggedin");
+            history.pushState({}, "", "/login");
+            location.reload();
+          });
+        }
+      } else {
+        if (signInLink) signInLink.style.display = "inline-block";
+        if (signUpLink) signUpLink.style.display = "inline-block";
+        if (addListingLink) addListingLink.style.display = "inline-block";
+        if (userInfo) userInfo.style.display = "none";
+      }
+    }
+
+    // 🔄 Load reusable components
+    loadHTML("header", "./components/Header/header.html", updateHeaderLinksForLogin);
+    loadHTML("hero", "./components/Hero/hero.html");
+    loadHTML("footer", "./components/Footer/footer.html");
+  </script>
+</body>

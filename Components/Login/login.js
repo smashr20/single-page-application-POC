@@ -25,12 +25,15 @@ const attachListeners = () => {
             alert("Welcome, " + data.user.name + "!");
             localStorage.setItem("loggedInUser", JSON.stringify(data.user));
             localStorage.setItem("isLoggedin", "true");
-            // ✅ Redirect based on role
-  if (data.user.role === "admin") {
-    window.location.hash = "/admin.html";
-  } else {
-    window.location.hash = "#dashboard";
-  }
+           if (data.user.role === "admin") {
+  history.pushState({}, "", "/admin.html");
+      window.location.href = "/admin.html";  // This will reload the page
+
+} else {
+  history.pushState({}, "", "/dashboard.html");
+    window.location.href = "/dashboard.html";  // This will reload the page
+
+}
           }
            else {
             console.warn("login.js: Login failed:", data.error);

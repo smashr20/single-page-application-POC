@@ -1,61 +1,30 @@
 <section class="talent-section">
-    <h2 class="talent-title">Featured Talent</h2>
-    <div class="talent-grid">
-        <div class="talent-card">
-            <div class="talent-info">
-                <h3>Andrew Taz</h3>
-                <p class="location"><i class="fas fa-map-marker-alt"></i> Perth</p>
-                <p class="role">Entertainer</p>
-            </div>
-        </div>
-        <div class="talent-card">
-            <div class="talent-info">
-                <h3>Trvis Brown</h3>
-                <p class="location"><i class="fas fa-map-marker-alt"></i> Hobart</p>
-                <p class="role">Speaker</p>
-            </div>
-        </div>
-        <div class="talent-card">
-            <div class="talent-info">
-                <h3>Layla Gong</h3>
-                <p class="location"><i class="fas fa-map-marker-alt"></i> Wollongong</p>
-                <p class="role">Entertainer</p>
-            </div>
-        </div>
-        <div class="talent-card">
-            <div class="talent-info">
-                <h3>Ammy Bush</h3>
-                <p class="location"><i class="fas fa-map-marker-alt"></i> Canberra</p>
-                <p class="role">Entertainer</p>
-            </div>
-        </div>
-        <div class="talent-card">
-            <div class="talent-info">
-                <h3>Honey Singh</h3>
-                <p class="location"><i class="fas fa-map-marker-alt"></i> Brisbane</p>
-                <p class="role">Rapper</p>
-            </div>
-        </div>
-        <div class="talent-card">
-            <div class="talent-info">
-                <h3>Dua Lipa</h3>
-                <p class="location"><i class="fas fa-map-marker-alt"></i> Melbourne</p>
-                <p class="role">Singer</p>
-            </div>
-        </div>
-        <div class="talent-card">
-            <div class="talent-info">
-                <h3>Samay Raina</h3>
-                <p class="location"><i class="fas fa-map-marker-alt"></i> Sydney</p>
-                <p class="role">Entertainer</p>
-            </div>
-        </div>
-        <div class="talent-card">
-            <div class="talent-info">
-                <h3>Zack Ryder</h3>
-                <p class="location"><i class="fas fa-map-marker-alt"></i> Sydney</p>
-                <p class="role">Host</p>
-            </div>
-        </div>
-    </div>
+  <h2 class="talent-title">Featured Talent</h2>
+  <div class="talent-grid" id="talent-grid"></div>
 </section>
+
+
+<div id="talentModal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <span class="close-btn" id="closeTalentModal">&times;</span>
+    <div id="modalTalentDetails"></div>
+  </div>
+</div>
+
+
+<!-- Booking Details Modal -->
+<div id="bookingModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <span class="close-btn" id="closeBookingModal">&times;</span>
+    <h2>Booking Details</h2>
+    <form id="bookingForm">
+      <label for="bookingDate">Booking Date:</label>
+      <input type="date" id="bookingDate" required>
+
+      <label for="bookingDescription">Description:</label>
+      <textarea id="bookingDescription" rows="4" placeholder="Describe your booking..." required></textarea>
+
+      <button type="submit">Continue</button>
+    </form>
+  </div>
+</div>

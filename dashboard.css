@@ -1,0 +1,129 @@
+
+  .dashboard-content {
+    padding: 30px;
+    margin-top: 100px; /* to avoid header overlap */
+  }
+
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+  }
+
+  .dashboard-card {
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s ease;
+  }
+
+  .dashboard-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .dashboard-card i {
+    font-size: 32px;
+    margin-top: 10px;
+    display: block;
+  }
+
+  .user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white
+}
+
+.user-info .profile-img {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+}
+
+#bookingsTableContainer {
+      margin-top: 2rem;
+      display: none;
+      overflow-x: auto;
+    }
+
+    #bookingsTable {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 1rem;
+    }
+
+    #bookingsTable th,
+    #bookingsTable td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    #bookingsTable th {
+      background-color: #1e3a8a;
+      color: white;
+    }
+
+    #bookingsTable tr:hover {
+      background-color: #f5f5f5;
+    }
+
+    #bookingsTable .action-btn {
+      padding: 6px 12px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    #bookingsTable .action-btn:hover {
+      background-color: #555;
+    }
+
+    @media (max-width: 768px) {
+      #bookingsTable th,
+      #bookingsTable td {
+        font-size: 14px;
+        padding: 8px;
+      }
+    }
+
+    #messagesTable {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#messagesTable th, #messagesTable td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+#messagesTable th {
+  background-color: #1e3a8a;
+  color: white;
+}
+
+#messagesTable tr:hover {
+  background-color: #f5f5f5;
+}
+
+#messagesTable .action-btn {
+  padding: 6px 12px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}

@@ -1,0 +1,632 @@
+<head>
+  <link rel="stylesheet" href="./dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.4);
+      z-index: 9999;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 500px;
+      position: relative;
+    }
+
+    .close-btn {
+      position: absolute;
+      right: 15px;
+      top: 10px;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .profile-photo-preview {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .profile-photo-preview img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    #editProfileForm input,
+    #editProfileForm button,
+    #updateBookingForm select,
+    #updateBookingForm textarea,
+    #updateBookingForm button {
+      display: block;
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    #editProfileForm button,
+    #updateBookingForm button {
+      background-color: #333;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    #updateBookingForm label {
+      font-size: 16px;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    #bookingsTableContainer {
+      margin-top: 2rem;
+      display: none;
+      overflow-x: auto;
+    }
+
+    #bookingsTable {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    #bookingsTable th,
+    #bookingsTable td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    #bookingsTable th {
+      background-color: #1e3a8a;
+      color: white;
+    }
+
+    #bookingsTable tr:hover {
+      background-color: #f5f5f5;
+    }
+
+    #bookingsTable .action-btn {
+      padding: 6px 12px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    #bookingsTable .action-btn:hover {
+      background-color: #555;
+    }
+
+    @media (max-width: 768px) {
+      #bookingsTable th,
+      #bookingsTable td {
+        font-size: 14px;
+        padding: 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="header"></div>
+  <div id="hero"></div>
+
+  <main class="dashboard-content">
+    <h1>Dashboard</h1>
+    <div class="dashboard-grid">
+      <a href="#" class="dashboard-card bookings">
+        <h2>Bookings</h2>
+        <div class="card-content">
+          <i class="fas fa-calendar"></i>
+        </div>
+      </a>
+
+      <a href="#" class="dashboard-card account">
+        <h2>My Account</h2>
+        <div class="card-content">
+          <i class="fas fa-user"></i>
+        </div>
+      </a>
+
+      <a href="#" class="dashboard-card messages">
+        <h2>Messages</h2>
+        <div class="card-content">
+          <i class="fas fa-envelope"></i>
+        </div>
+      </a>
+    </div>
+
+    <div id="bookingsTableContainer">
+      <table id="bookingsTable">
+        <thead>
+          <tr>
+            <th>Booking No.</th>
+            <th>Customer</th>
+            <th>Booking Date</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="bookingsTableBody"></tbody>
+      </table>
+    </div>
+    
+  </main>
+
+  <!-- Profile Edit Modal -->
+  <div id="profileModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <span class="close-btn" id="closeProfileModal">×</span>
+      <h2>Edit Profile</h2>
+      <form id="editProfileForm">
+        <div class="profile-photo-preview">
+          <img id="previewPhoto" src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="Profile Photo" />
+          <input type="file" id="profilePhoto" accept="image/*" style="display:none;" />
+          <button type="button" id="uploadTriggerBtn">Upload Image</button>
+        </div>
+        <input type="text" id="editName" placeholder="Name" required />
+        <input type="text" id="editAddress" placeholder="Address" required />
+        <input type="text" id="editCountry" placeholder="Country" required />
+        <input type="text" id="editState" placeholder="State" required />
+        <input type="text" id="editPostcode" placeholder="Postcode" required />
+        <input type="tel" id="editMobile" placeholder="Mobile" required />
+        <input type="url" id="editWebsite" placeholder="Website" />
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Booking Status Modal -->
+  <div id="bookingModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <span class="close-btn" id="closeBookingModal">×</span>
+      <h2>Update Booking</h2>
+      <form id="updateBookingForm">
+        <label>Status:</label>
+        <select id="bookingStatus">
+          <option value="Pending">Pending</option>
+          <option value="Confirmed">Confirmed</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+        <label>Message:</label>
+        <textarea id="bookingMessage" rows="4" placeholder="Add message..."></textarea>
+        <input type="hidden" id="bookingId" />
+        <button type="submit">Update</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="messagesTableContainer" style="display: none; margin-top: 2rem; overflow-x: auto;">
+<table id="messagesTable">
+  <thead>
+    <tr>
+      <th>Message No.</th>
+      <th>Booking No.</th>
+      <th>Sender</th>
+      <th>Message</th>
+      <th>Sent At</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody id="messagesTableBody"></tbody>
+</table>
+</div>
+
+
+  <div id="footer"></div>
+
+  <script>
+    function loadHTML(id, file, callback) {
+      fetch(file)
+        .then(res => res.text())
+        .then(data => {
+          document.getElementById(id).innerHTML = data;
+          const cssFile = file.replace(".html", ".css");
+          if (!document.querySelector(`link[href="${cssFile}"]`)) {
+            fetch(cssFile, { method: "HEAD" }).then(resp => {
+              if (resp.ok) {
+                const link = document.createElement("link");
+                link.rel = "stylesheet";
+                link.href = cssFile;
+                document.head.appendChild(link);
+              }
+            });
+          }
+          if (callback) callback();
+        })
+        .catch(err => {
+          console.error(`Failed to load ${file}:`, err);
+          document.getElementById(id).innerHTML = `<p>Error loading ${id} content.</p>`;
+        });
+    }
+
+    function updateHeaderLinksForLogin() {
+      const isLoggedIn = localStorage.getItem("isLoggedin") === "true";
+      const user = JSON.parse(localStorage.getItem("loggedInUser"));
+
+      const signInLink = document.getElementById("nav-signin");
+      const signUpLink = document.getElementById("nav-signup");
+      const addListingLink = document.getElementById("nav-listing");
+      const userInfo = document.getElementById("user-info");
+      const userName = document.getElementById("user-name");
+      const profileImg = document.getElementById("profile-img-header");
+      const logoutBtn = document.getElementById("logout-btn");
+
+      if (isLoggedIn && user) {
+        if (signInLink) signInLink.style.display = "none";
+        if (signUpLink) signUpLink.style.display = "none";
+        if (addListingLink) addListingLink.style.display = "none";
+        if (userInfo && userName) {
+          userInfo.style.display = "flex";
+          userName.textContent = user.name;
+        }
+        if (profileImg) {
+          profileImg.onclick = () => {
+            history.pushState({}, "", "/dashboard");
+            location.reload();
+          };
+        }
+        if (logoutBtn) {
+          logoutBtn.addEventListener("click", () => {
+            localStorage.removeItem("loggedInUser");
+            localStorage.removeItem("isLoggedin");
+            history.pushState({}, "", "/");
+            location.reload();
+          });
+        }
+      } else {
+        if (signInLink) signInLink.style.display = "inline-block";
+        if (signUpLink) signUpLink.style.display = "inline-block";
+        if (addListingLink) addListingLink.style.display = "inline-block";
+        if (userInfo) userInfo.style.display = "none";
+      }
+    }
+
+    // Load reusable components
+    loadHTML("header", "./components/Header/header.html", updateHeaderLinksForLogin);
+    loadHTML("hero", "./components/Hero/hero.html", () => {
+      const searchContainer = document.querySelector(".search-container");
+      const joinUs = document.querySelector(".join-us-banner");
+      if (searchContainer) {
+        console.log("dashboard.html: Hiding .search-container");
+        searchContainer.style.display = "none";
+      } else {
+        console.warn("dashboard.html: .search-container not found");
+      }
+      if (joinUs) {
+        console.log("dashboard.html: Changing .join-us-banner text");
+        joinUs.querySelector("h1").textContent = "Welcome Back!";
+      } else {
+        console.warn("dashboard.html: .join-us-banner not found");
+      }
+    });
+    loadHTML("footer", "./components/Footer/footer.html");
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const profileModal = document.getElementById("profileModal");
+      const closeProfileBtn = document.getElementById("closeProfileModal");
+      const accountCard = document.querySelector(".dashboard-card.account");
+      const profileForm = document.getElementById("editProfileForm");
+      const bookingsCard = document.querySelector(".dashboard-card.bookings");
+      const bookingsTableContainer = document.getElementById("bookingsTableContainer");
+      const bookingsTableBody = document.getElementById("bookingsTableBody");
+      const bookingModal = document.getElementById("bookingModal");
+      const closeBookingBtn = document.getElementById("closeBookingModal");
+      const updateBookingForm = document.getElementById("updateBookingForm");
+
+      // Profile Modal Logic
+      if (accountCard) {
+        accountCard.addEventListener("click", () => {
+          const userId = JSON.parse(localStorage.getItem("loggedInUser"))?.id;
+          if (!userId) return alert("User not found in session.");
+
+          fetch("http://localhost:3000/api/get-profile", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: userId })
+          })
+            .then(res => res.json())
+            .then(data => {
+              if (data.user) {
+                document.getElementById("editName").value = data.user.name || "";
+                document.getElementById("editAddress").value = data.user.address || "";
+                document.getElementById("editCountry").value = data.user.country || "";
+                document.getElementById("editState").value = data.user.state || "";
+                document.getElementById("editPostcode").value = data.user.postcode || "";
+                document.getElementById("editMobile").value = data.user.mobile || "";
+                document.getElementById("editWebsite").value = data.user.website || "";
+                const preview = document.getElementById("previewPhoto");
+                preview.src = data.user.profilePhoto && data.user.profilePhoto.trim() !== ""
+                  ? "http://localhost:3000" + data.user.profilePhoto
+                  : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg";
+                profileModal.style.display = "flex";
+              } else {
+                alert(data.error || "Failed to load profile.");
+              }
+            })
+            .catch(err => {
+              console.error("Fetch error:", err);
+              alert("Unable to load profile.");
+            });
+        });
+      }
+
+      if (closeProfileBtn) {
+        closeProfileBtn.addEventListener("click", () => {
+          profileModal.style.display = "none";
+        });
+      }
+
+      if (profileForm) {
+        profileForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const userId = JSON.parse(localStorage.getItem("loggedInUser"))?.id;
+          const payload = {
+            id: userId,
+            name: document.getElementById("editName").value,
+            address: document.getElementById("editAddress").value,
+            country: document.getElementById("editCountry").value,
+            state: document.getElementById("editState").value,
+            postcode: document.getElementById("editPostcode").value,
+            mobile: document.getElementById("editMobile").value,
+            website: document.getElementById("editWebsite").value
+          };
+
+          fetch("http://localhost:3000/api/update-profile", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          })
+            .then(res => res.json())
+            .then(data => {
+              if (data.message) {
+                alert("Profile updated successfully!");
+                const current = JSON.parse(localStorage.getItem("loggedInUser"));
+                localStorage.setItem("loggedInUser", JSON.stringify({ ...current, ...payload }));
+                profileModal.style.display = "none";
+              } else {
+                alert(data.error || "Update failed.");
+              }
+            })
+            .catch(err => {
+              console.error("Update error:", err);
+              alert("Server error while updating profile.");
+            });
+        });
+      }
+
+      // Profile Photo Upload
+      const photoInput = document.getElementById("profilePhoto");
+      const uploadBtn = document.getElementById("uploadTriggerBtn");
+      const previewImg = document.getElementById("previewPhoto");
+
+      if (uploadBtn && photoInput && previewImg) {
+        uploadBtn.addEventListener("click", () => {
+          photoInput.click();
+        });
+
+        photoInput.addEventListener("change", () => {
+          const file = photoInput.files[0];
+          if (file && file.type.startsWith("image/")) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              previewImg.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+
+            const formData = new FormData();
+            const userId = JSON.parse(localStorage.getItem("loggedInUser"))?.id;
+            formData.append("id", userId);
+            formData.append("profilePhoto", file);
+
+            fetch("http://localhost:3000/api/upload-photo", {
+              method: "POST",
+              body: formData
+            })
+              .then(res => res.json())
+              .then(data => {
+                if (data.profilePhoto) {
+                  const user = JSON.parse(localStorage.getItem("loggedInUser"));
+                  user.profilePhoto = data.profilePhoto;
+                  localStorage.setItem("loggedInUser", JSON.stringify(user));
+                  console.log("dashboard.html: Profile photo updated!");
+                }
+              })
+              .catch(err => {
+                console.error("dashboard.html: Photo upload failed:", err);
+                alert("Failed to upload photo.");
+              });
+          } else {
+            alert("Please select a valid image file.");
+          }
+        });
+      }
+
+      // Bookings Table Logic
+      if (bookingsCard) {
+        bookingsCard.addEventListener("click", async (e) => {
+          e.preventDefault();
+          console.log("dashboard.html: Bookings card clicked");
+
+          if (bookingsTableContainer.style.display === "block") {
+            bookingsTableContainer.style.display = "none";
+            return;
+          }
+
+const user = JSON.parse(localStorage.getItem("loggedInUser"));
+const userId = user?.id;
+const role = user?.role;
+
+          try {
+            const res = await fetch("http://localhost:3000/api/get-bookings", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ id: userId,role })
+            });
+
+            const data = await res.json();
+            bookingsTableBody.innerHTML = "";
+
+            if (data.bookings && data.bookings.length > 0) {
+              data.bookings.forEach(booking => {
+                const row = document.createElement("tr");
+                row.dataset.bookingId = booking.id;
+                row.dataset.bookingStatus = booking.status;
+                row.innerHTML = `
+                  <td>${booking.id}</td>
+                  <td>${booking.customer}</td>
+                  <td>${new Date(booking.bookingDate).toLocaleDateString()}</td>
+                  <td>${booking.description}</td>
+                  <td>${booking.status}</td>
+                  <td><button class="action-btn">View</button></td>
+                `;
+                bookingsTableBody.appendChild(row);
+              });
+            } else {
+              bookingsTableBody.innerHTML = "<tr><td colspan='5'>No bookings found.</td></tr>";
+            }
+
+            bookingsTableContainer.style.display = "block";
+          } catch (err) {
+            console.error("dashboard.html: Failed to load bookings:", err);
+            alert("Could not load bookings.");
+          }
+        });
+      }
+
+      // Booking Modal Logic (Event Delegation for View Buttons)
+      if (bookingsTableBody) {
+        bookingsTableBody.addEventListener("click", (e) => {
+          if (e.target && e.target.classList.contains("action-btn")) {
+            console.log("dashboard.html: View button clicked");
+            const row = e.target.closest("tr");
+            const bookingId = row.dataset.bookingId;
+            const status = row.dataset.bookingStatus || "Pending";
+
+            document.getElementById("bookingStatus").value = status;
+            document.getElementById("bookingMessage").value = "";
+            document.getElementById("bookingId").value = bookingId;
+
+            bookingModal.style.display = "flex";
+          }
+        });
+      }
+
+      // Close Booking Modal
+      if (closeBookingBtn) {
+        closeBookingBtn.addEventListener("click", () => {
+          console.log("dashboard.html: Closing booking modal");
+          bookingModal.style.display = "none";
+        });
+      }
+
+      // Close Modals on Outside Click
+      [profileModal, bookingModal].forEach(modal => {
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) {
+            console.log(`dashboard.html: Closing ${modal.id} via outside click`);
+            modal.style.display = "none";
+          }
+        });
+      });
+
+ if (updateBookingForm) {
+  updateBookingForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    console.log("dashboard.html: Update booking form submitted");
+
+    const bookingId = document.getElementById("bookingId").value;
+    const status = document.getElementById("bookingStatus").value;
+
+    fetch("http://localhost:3000/api/update-booking", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: bookingId, status })
+    })
+      .then(res => res.json())
+      .then(data => {
+        alert(data.message || "Booking updated!");
+        bookingModal.style.display = "none";
+        location.reload();
+      })
+      .catch(err => {
+        console.error("dashboard.html: Update error:", err);
+        alert("Failed to update booking.");
+      });
+  });
+}
+
+    });
+    
+  </script>
+
+
+<!-- <script>
+  const messagesCard = document.querySelector(".dashboard-card.messages");
+const messagesTableContainer = document.getElementById("messagesTableContainer");
+const messagesTableBody = document.getElementById("messagesTableBody");
+
+if (messagesCard) {
+  messagesCard.addEventListener("click", async () => {
+    if (messagesTableContainer.style.display === "block") {
+      messagesTableContainer.style.display = "none";
+      return;
+    }
+
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    const userId = user?.id;
+    if (!userId) return alert("User not logged in");
+
+    try {
+      const res = await fetch("http://localhost:3000/api/get-booking-messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ bookingId, userId })
+      });
+
+      const data = await res.json();
+      messagesTableBody.innerHTML = "";
+
+      if (data.messages && data.messages.length > 0) {
+        data.messages.forEach(msg => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${msg.messageId}</td>
+            <td>${msg.bookingId}</td>
+            <td>${msg.senderName}</td>
+            <td>${msg.message}</td>
+            <td>${new Date(msg.sentAt).toLocaleString()}</td>
+            <td><button class="action-btn message-view-btn" data-id="${msg.messageId}">View</button></td>
+          `;
+          messagesTableBody.appendChild(row);
+        });
+      } else {
+        messagesTableBody.innerHTML = "<tr><td colspan='6'>No messages found.</td></tr>";
+      }
+
+      messagesTableContainer.style.display = "block";
+    } catch (err) {
+      console.error("Failed to fetch messages:", err);
+      alert("Error fetching messages.");
+    }
+  });
+}
+
+</script> -->
+
+
+</body>

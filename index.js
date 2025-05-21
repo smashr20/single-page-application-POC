@@ -76,7 +76,7 @@ function updateHeaderLinksForLogin() {
 if (profileImg) {
   profileImg.style.cursor = "pointer"; // optional: make it look clickable
   profileImg.onclick = () => {
-    window.location.hash = "#dashboard";
+    window.location.hash = "/dashboard";
   };
 }
 
@@ -111,13 +111,13 @@ loadHTML("news", "./components/News/news.html");
 loadHTML("booking", "./components/Booking/booking.html");
 loadHTML("easyhire", "./components/Easyhire/easyhire.html");
 loadHTML("register", "./components/Register/register.html");
-loadHTML("dashboard", "./components/Dashboard/dashboard.html");
+loadHTML("dashboard", "/dashboard.html");
 // Add this with your other loadHTML calls at the top
 
 window.addEventListener("load", () => {
   // Check if user is logged in
   if (localStorage.getItem('isLoggedin') === 'true') {
-    window.location.hash = '#dashboard';
+window.navigator = "/dashboard.html";
   } else {
     loadPage();
   }
@@ -153,7 +153,11 @@ function loadPage() {
       hide: ["register"],
       show: ["hero", "intro", "news", "booking", "content"]
     },
-    'dashboard': {
+    // 'dashboard': {
+    //     hide: ["intro", "news", "booking", "signup", "register"],
+    //     show: ["content", "hero"]
+    // },
+    'easyhire': {
         hide: ["intro", "news", "booking", "signup", "register"],
         show: ["content", "hero"]
     },

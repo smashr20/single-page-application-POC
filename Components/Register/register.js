@@ -33,9 +33,15 @@ console.log("register.js: Script started"); // Debug: Confirm script starts
   .then(response => response.json())
   .then(data => {
     if (data.message) {
+      console.log("data",data);
+       localStorage.setItem("loggedInUser", JSON.stringify(data.user));
+      localStorage.setItem("isLoggedin", "true");
+
       console.log("register.js: Signup successful");
       alert("Registration successful!");
-      form.reset();
+      // form.reset();
+    history.pushState({}, "", "/dashboard.html");
+    window.location.href = "/dashboard.html";  // This will reload the page
     } else {
       console.warn("register.js: Server error", data.error);
       alert("Error: " + (data.error || "Unknown error"));

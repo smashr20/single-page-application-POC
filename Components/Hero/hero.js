@@ -1,37 +1,75 @@
-(function() {
-    const searchContainer = document.getElementById('search-container');
-    const joinUsBanner = document.getElementById('join-us-banner');
+console.log("hero.js: Script started");
 
-    // Function to update banner text based on hash
-    const updateBannerText = () => {
-        if (!joinUsBanner) return;
-        const hash = window.location.hash.slice(1) || 'home';
-        let bannerText = 'Join Us';
-        if (hash === 'login') bannerText = 'Login';
-        else if (hash === 'signup') bannerText = 'Getting Started with the vocals is quick and easy.<br>How would you like to join us?';
-        else if (hash === 'register') bannerText = 'Join Us';
-        joinUsBanner.querySelector('h1').innerHTML  = bannerText;
-    };
+const attachSearchListeners = () => {
+  console.log("hero.js: Running attachSearchListeners");
+  const form = document.getElementById("search-container");
+  if (form) {
+    console.log("hero.js: Search form found:", form);
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      console.log("hero.js: Search form submitted");
 
-    // Function to control visibility based on hash
-    const updateHeroVisibility = () => {
-        const hash = window.location.hash.slice(1) || 'home';
-        // Hashes that show search
-        const showSearchRoutes = ['home', 'search', 'booking'];
-        // Hashes that show join us banner
-        const showBannerRoutes = ['', 'signup', 'register'];
+      const formData = new FormData(form);
+      const searchParams = {
+        what: formData.get("what"),
+        classification: formData.get("classification"),
+        where: formData.get("where")
+      };
 
-        if (searchContainer) {
-            searchContainer.style.display = showSearchRoutes.includes(hash) ? 'flex' : 'none';
-        }
-        if (joinUsBanner) {
-            joinUsBanner.style.display = showBannerRoutes.includes(hash) ? 'flex' : 'none';
-            if (showBannerRoutes.includes(hash)) updateBannerText();
-        }
-    };
+      console.log("hero.js: Search parameters:", searchParams);
 
-    window.addEventListener('hashchange', updateHeroVisibility);
-    updateHeroVisibility();
-})();
+      // Store search parameters in localStorage for easyhire.js
+      localStorage.setItem("searchParams", JSON.stringify(searchParams));
 
+      // Navigate to #easyhire
+      console.log("hero.js: Redirecting to #easyhire");
+      window.location.hash = "#easyhire";
+    });
+  } else {
+    console.error("hero.js: Form with id 'search-container' not found");
+  }
+};
 
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("hero.js: DOMContentLoaded fired");
+
+  const content = document.getElementById("content");
+  if (content) {
+    console.log("hero.js: Content element found, HTML:", content.innerHTML);
+  } else {
+    console.error("hero.js: Content element with id 'content' not found");
+  }
+
+  attachSearchListeners();
+
+  if (content) {
+    console.log("hero.js: Setting up MutationObserver");
+    const observer = new MutationObserver(() => {
+      console.log("hero.js: MutationObserver detected DOM change, HTML:", content.innerHTML);
+      attachSearchListeners();
+    });
+    observer.observe(content, { childList: true, subtree: true });
+  } else {
+    console.log("hero.js: Retrying to find content element...");
+    const interval = setInterval(() => {
+      const retryContent = document.getElementById("content");
+      if (retryContent) {
+        console.log("hero.js: Content element found on retry, HTML:", retryContent.innerHTML);
+        clearInterval(interval);
+        attachSearchListeners();
+        const observer = new MutationObserver(() => {
+          console.log("hero.js: MutationObserver detected DOM change, HTML:", retryContent.innerHTML);
+          attachSearchListeners();
+        });
+        observer.observe(retryContent, { childList: true, subtree: true });
+      }
+    }, 500);
+    setTimeout(() => clearInterval(interval), 5000);
+  }
+});
+
+console.log("hero.js: Document readyState:", document.readyState);
+if (document.readyState === "complete" || document.readyState === "interactive") {
+  console.log("hero.js: DOM already loaded, running attachSearchListeners");
+  attachSearchListeners();
+}

@@ -14,11 +14,13 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
-    max-width: 1200px;
+    max-width: 600px;
     margin: 0 auto;
 }
 
 .talent-card {
+    position: relative;
+
     background-color: #0a192f;
     border-radius: 8px;
     overflow: hidden;
@@ -27,22 +29,43 @@
     aspect-ratio: 1;
     display: flex;
     align-items: flex-end;
+
+    /* ✅ Add these lines */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
 }
 
-.talent-card:hover {
-    transform: translateY(-5px);
+.talent-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    z-index: 0;
 }
 
 .talent-info {
-    padding: 1.5rem;
+    position: relative;
+    z-index: 1;
+    padding: 1rem;
     color: white;
-    width: 100%;
+    backdrop-filter: blur(2px); /* subtle clarity boost */
+}
+
+
+
+
+.talent-card:hover {
+    transform: translateY(-5px);
 }
 
 .talent-info h3 {
     margin: 0;
     font-size: 1.25rem;
     font-weight: 600;
+    color: white;
 }
 
 .talent-info .location {
@@ -69,4 +92,31 @@
     .talent-title {
         font-size: 2rem;
     }
+}
+
+
+.modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px; right: 15px;
+  font-size: 1.5rem;
+  cursor: pointer;
 }
