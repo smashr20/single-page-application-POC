@@ -1,6 +1,7 @@
 <head>
   <link rel="stylesheet" href="./dashboard.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ 
 </head>
 
 <body>
@@ -11,7 +12,8 @@
     <h1>Dashboard</h1>
     <div class="dashboard-grid">
       <a href="#" class="dashboard-card bookings">
-        <h2>Bookings</h2>
+        <h2>Total Bookings</h2>
+        <h4 id="totalBookings"></h4>
         <div class="card-content">
           <i class="fas fa-calendar"></i>
         </div>
@@ -25,13 +27,69 @@
       </a>
 
       <a href="#" class="dashboard-card messages">
-        <h2>Messages</h2>
+        <h2>Total Messages</h2>
+                <h4 id="totalMessages"></h4>
+
         <div class="card-content">
           <i class="fas fa-envelope"></i>
         </div>
       </a>
+      <a href="#" class="dashboard-card users">
+  <h2>All Users</h2>
+  <div class="card-content">
+    <i class="fas fa-users"></i>
+  </div>
+</a>
+
     </div>
+
+    
   </main>
+
+  <!-- Profile Edit Modal -->
+  <div id="profileModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <span class="close-btn" id="closeProfileModal">×</span>
+      <h2>Edit Profile</h2>
+      <form id="editProfileForm">
+        <div class="profile-photo-preview">
+          <img id="previewPhoto" src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="Profile Photo" />
+          <input type="file" id="profilePhoto" accept="image/*" style="display:none;" />
+          <button type="button" id="uploadTriggerBtn">Upload Image</button>
+        </div>
+        <input type="text" id="editName" placeholder="Name" required />
+        <input type="text" id="editAddress" placeholder="Address" required />
+        <input type="text" id="editCountry" placeholder="Country" required />
+        <input type="text" id="editState" placeholder="State" required />
+        <input type="text" id="editPostcode" placeholder="Postcode" required />
+        <input type="tel" id="editMobile" placeholder="Mobile" required />
+        <input type="url" id="editWebsite" placeholder="Website" />
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
+  </div>
+
+
+
+  <div id="usersTableContainer" style="margin-top: 2rem; display: none;">
+  <h2>All Users</h2>
+  <table id="usersTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Email</th>
+        <th>Mobile</th>
+        <th>Address</th>
+        <th>Profile Photo</th>
+      </tr>
+    </thead>
+    <tbody id="usersTableBody"></tbody>
+  </table>
+</div>
+
+
 
   <div id="footer"></div>
 
@@ -41,11 +99,8 @@
         .then(res => res.text())
         .then(data => {
           document.getElementById(id).innerHTML = data;
-
-          // 🔄 Load CSS if exists
           const cssFile = file.replace(".html", ".css");
-          const existingLink = document.querySelector(`link[href="${cssFile}"]`);
-          if (!existingLink) {
+          if (!document.querySelector(`link[href="${cssFile}"]`)) {
             fetch(cssFile, { method: "HEAD" }).then(resp => {
               if (resp.ok) {
                 const link = document.createElement("link");
@@ -55,8 +110,11 @@
               }
             });
           }
-
           if (callback) callback();
+        })
+        .catch(err => {
+          console.error(`Failed to load ${file}:`, err);
+          document.getElementById(id).innerHTML = `<p>Error loading ${id} content.</p>`;
         });
     }
 
@@ -76,25 +134,21 @@
         if (signInLink) signInLink.style.display = "none";
         if (signUpLink) signUpLink.style.display = "none";
         if (addListingLink) addListingLink.style.display = "none";
-
         if (userInfo && userName) {
           userInfo.style.display = "flex";
           userName.textContent = user.name;
         }
-
         if (profileImg) {
-          profileImg.style.cursor = "pointer";
           profileImg.onclick = () => {
             history.pushState({}, "", "/dashboard");
             location.reload();
           };
         }
-
         if (logoutBtn) {
           logoutBtn.addEventListener("click", () => {
             localStorage.removeItem("loggedInUser");
             localStorage.removeItem("isLoggedin");
-            history.pushState({}, "", "/login");
+            history.pushState({}, "", "/");
             location.reload();
           });
         }
@@ -106,9 +160,225 @@
       }
     }
 
-    // 🔄 Load reusable components
+    // Load reusable components
     loadHTML("header", "./components/Header/header.html", updateHeaderLinksForLogin);
-    loadHTML("hero", "./components/Hero/hero.html");
+    loadHTML("hero", "./components/Hero/hero.html", () => {
+      const searchContainer = document.querySelector(".search-container");
+      const joinUs = document.querySelector(".join-us-banner");
+      if (searchContainer) {
+        console.log("dashboard.html: Hiding .search-container");
+        searchContainer.style.display = "none";
+      } else {
+        console.warn("dashboard.html: .search-container not found");
+      }
+      if (joinUs) {
+        console.log("dashboard.html: Changing .join-us-banner text");
+        joinUs.querySelector("h1").textContent = "Welcome Back Admin!";
+      } else {
+        console.warn("dashboard.html: .join-us-banner not found");
+      }
+    });
     loadHTML("footer", "./components/Footer/footer.html");
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Load summary stats
+fetch("http://localhost:3000/api/stats-summary")
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("totalBookings").textContent = data.totalBookings || 0;
+    document.getElementById("totalMessages").textContent = data.totalMessages || 0;
+  })
+  .catch(err => {
+    console.error("Failed to fetch stats summary:", err);
+  });
+
+
+      const profileModal = document.getElementById("profileModal");
+      const closeProfileBtn = document.getElementById("closeProfileModal");
+      const accountCard = document.querySelector(".dashboard-card.account");
+      const profileForm = document.getElementById("editProfileForm");
+      const bookingsCard = document.querySelector(".dashboard-card.bookings");
+      const bookingsTableContainer = document.getElementById("bookingsTableContainer");
+      const bookingsTableBody = document.getElementById("bookingsTableBody");
+      const bookingModal = document.getElementById("bookingModal");
+      const closeBookingBtn = document.getElementById("closeBookingModal");
+      const updateBookingForm = document.getElementById("updateBookingForm");
+
+      // Profile Modal Logic
+      if (accountCard) {
+        accountCard.addEventListener("click", () => {
+          const userId = JSON.parse(localStorage.getItem("loggedInUser"))?.id;
+          if (!userId) return alert("User not found in session.");
+
+          fetch("http://localhost:3000/api/get-profile", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: userId })
+          })
+            .then(res => res.json())
+            .then(data => {
+              if (data.user) {
+                document.getElementById("editName").value = data.user.name || "";
+                document.getElementById("editAddress").value = data.user.address || "";
+                document.getElementById("editCountry").value = data.user.country || "";
+                document.getElementById("editState").value = data.user.state || "";
+                document.getElementById("editPostcode").value = data.user.postcode || "";
+                document.getElementById("editMobile").value = data.user.mobile || "";
+                document.getElementById("editWebsite").value = data.user.website || "";
+                const preview = document.getElementById("previewPhoto");
+                preview.src = data.user.profilePhoto && data.user.profilePhoto.trim() !== ""
+                  ? "http://localhost:3000" + data.user.profilePhoto
+                  : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg";
+                profileModal.style.display = "flex";
+              } else {
+                alert(data.error || "Failed to load profile.");
+              }
+            })
+            .catch(err => {
+              console.error("Fetch error:", err);
+              alert("Unable to load profile.");
+            });
+        });
+      }
+
+      if (closeProfileBtn) {
+        closeProfileBtn.addEventListener("click", () => {
+          profileModal.style.display = "none";
+        });
+      }
+
+      if (profileForm) {
+        profileForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const userId = JSON.parse(localStorage.getItem("loggedInUser"))?.id;
+          const payload = {
+            id: userId,
+            name: document.getElementById("editName").value,
+            address: document.getElementById("editAddress").value,
+            country: document.getElementById("editCountry").value,
+            state: document.getElementById("editState").value,
+            postcode: document.getElementById("editPostcode").value,
+            mobile: document.getElementById("editMobile").value,
+            website: document.getElementById("editWebsite").value
+          };
+
+          fetch("http://localhost:3000/api/update-profile", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          })
+            .then(res => res.json())
+            .then(data => {
+              if (data.message) {
+                alert("Profile updated successfully!");
+                const current = JSON.parse(localStorage.getItem("loggedInUser"));
+                localStorage.setItem("loggedInUser", JSON.stringify({ ...current, ...payload }));
+                profileModal.style.display = "none";
+              } else {
+                alert(data.error || "Update failed.");
+              }
+            })
+            .catch(err => {
+              console.error("Update error:", err);
+              alert("Server error while updating profile.");
+            });
+        });
+      }
+
+      // Profile Photo Upload
+      const photoInput = document.getElementById("profilePhoto");
+      const uploadBtn = document.getElementById("uploadTriggerBtn");
+      const previewImg = document.getElementById("previewPhoto");
+
+      if (uploadBtn && photoInput && previewImg) {
+        uploadBtn.addEventListener("click", () => {
+          photoInput.click();
+        });
+
+        photoInput.addEventListener("change", () => {
+          const file = photoInput.files[0];
+          if (file && file.type.startsWith("image/")) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              previewImg.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+
+            const formData = new FormData();
+            const userId = JSON.parse(localStorage.getItem("loggedInUser"))?.id;
+            formData.append("id", userId);
+            formData.append("profilePhoto", file);
+
+            fetch("http://localhost:3000/api/upload-photo", {
+              method: "POST",
+              body: formData
+            })
+              .then(res => res.json())
+              .then(data => {
+                if (data.profilePhoto) {
+                  const user = JSON.parse(localStorage.getItem("loggedInUser"));
+                  user.profilePhoto = data.profilePhoto;
+                  localStorage.setItem("loggedInUser", JSON.stringify(user));
+                  console.log("dashboard.html: Profile photo updated!");
+                }
+              })
+              .catch(err => {
+                console.error("dashboard.html: Photo upload failed:", err);
+                alert("Failed to upload photo.");
+              });
+          } else {
+            alert("Please select a valid image file.");
+          }
+        });
+      }
+
+
+   
+
+    });
+    
   </script>
+
+
+<script>
+  const usersCard = document.querySelector(".dashboard-card.users");
+const usersTableContainer = document.getElementById("usersTableContainer");
+const usersTableBody = document.getElementById("usersTableBody");
+
+if (usersCard) {
+  usersCard.addEventListener("click", () => {
+    if (usersTableContainer.style.display === "block") {
+      usersTableContainer.style.display = "none";
+      return;
+    }
+
+    fetch("http://localhost:3000/api/get-users")
+      .then(res => res.json())
+      .then(data => {
+        usersTableBody.innerHTML = "";
+        data.users.forEach(user => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${user.id}</td>
+            <td>${user.name}</td>
+            <td>${user.role}</td>
+            <td>${user.email}</td>
+            <td>${user.mobile}</td>
+            <td>${user.address}, ${user.state}, ${user.country}, ${user.postcode}</td>
+            <td><img src="${user.profilePhoto ? 'http://localhost:3000' + user.profilePhoto : 'https://i.pravatar.cc/40'}" alt="Photo" width="40" height="40" style="border-radius:50%; object-fit:cover;"></td>
+          `;
+          usersTableBody.appendChild(row);
+        });
+        usersTableContainer.style.display = "block";
+      })
+      .catch(err => {
+        console.error("Error loading users:", err);
+        usersTableBody.innerHTML = "<tr><td colspan='7'>Failed to load users.</td></tr>";
+        usersTableContainer.style.display = "block";
+      });
+  });
+}
+
+</script>
+
 </body>

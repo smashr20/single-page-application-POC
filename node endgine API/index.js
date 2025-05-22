@@ -346,6 +346,53 @@ app.post('/api/send-booking-message', (req, res) => {
 });
 
 
+app.get('/api/stats-summary', (req, res) => {
+  const summary = {
+    totalBookings: 0,
+    totalMessages: 0,
+  };
+
+  const bookingCountQuery = `SELECT COUNT(*) AS count FROM bookings`;
+  const messageCountQuery = `SELECT COUNT(*) AS count FROM booking_messages`;
+
+  db.query(bookingCountQuery, (err1, result1) => {
+    if (err1) {
+      console.error("Error getting booking count:", err1);
+      return res.status(500).json({ error: "Error fetching booking count" });
+    }
+
+    summary.totalBookings = result1[0].count;
+
+    db.query(messageCountQuery, (err2, result2) => {
+      if (err2) {
+        console.error("Error getting message count:", err2);
+        return res.status(500).json({ error: "Error fetching message count" });
+      }
+
+      summary.totalMessages = result2[0].count;
+      res.status(200).json(summary);
+    });
+  });
+});
+
+
+app.get("/api/get-users", (req, res) => {
+  const query = `
+    SELECT id, name, email, mobile, address, country, state, postcode, role, profilePhoto
+    FROM users
+    ORDER BY id DESC
+  `;
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("Error fetching users:", err);
+      return res.status(500).json({ error: "Failed to retrieve users" });
+    }
+
+    res.status(200).json({ users: results });
+  });
+});
+
 
 
 

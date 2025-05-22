@@ -127,3 +127,21 @@
   cursor: pointer;
   font-size: 14px;
 }
+
+
+
+  #usersTable {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  #usersTable th, #usersTable td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+  }
+  #usersTable th {
+    background-color: #1e3a8a;
+    color: white;
+  }
