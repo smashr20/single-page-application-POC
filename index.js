@@ -11,7 +11,7 @@ function loadHTML(id, file, callback) {
     .then(data => {
       document.getElementById(id).innerHTML = data;
 
-      if (callback) callback(); // ✅ Callback after HTML loads
+      if (callback) callback(); //  Callback after HTML loads
 
       const existingLink = document.querySelector(`link[href="${cssFile}"]`);
       if (!existingLink) {
@@ -158,6 +158,26 @@ function loadPage() {
     //     show: ["content", "hero"]
     // },
     'easyhire': {
+        hide: ["intro", "news", "booking", "signup", "register"],
+        show: ["content", "hero"]
+    },
+    'entertainers': {
+        hide: ["intro", "news", "booking", "signup", "register"],
+        show: ["content", "hero"]
+    },
+     'bands': {
+        hide: ["intro", "news", "booking", "signup", "register"],
+        show: ["content", "hero"]
+    },
+     'celebrities': {
+        hide: ["intro", "news", "booking", "signup", "register"],
+        show: ["content", "hero"]
+    },
+      'services': {
+        hide: ["intro", "news", "booking", "signup", "register"],
+        show: ["content", "hero"]
+    },
+     'speakers': {
         hide: ["intro", "news", "booking", "signup", "register"],
         show: ["content", "hero"]
     },

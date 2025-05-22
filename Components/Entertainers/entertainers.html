@@ -1,0 +1,30 @@
+<section class="talent-section">
+  <h2 class="talent-title">Featured Talent - Entertainers</h2>
+  <div class="talent-grid" id="talent-grid"></div>
+</section>
+
+
+<div id="talentModal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <span class="close-btn" id="closeTalentModal">&times;</span>
+    <div id="modalTalentDetails"></div>
+  </div>
+</div>
+
+
+<!-- Booking Details Modal -->
+<div id="bookingModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <span class="close-btn" id="closeBookingModal">&times;</span>
+    <h2>Booking Details</h2>
+    <form id="bookingForm">
+      <label for="bookingDate">Booking Date:</label>
+      <input type="date" id="bookingDate" required>
+
+      <label for="bookingDescription">Description:</label>
+      <textarea id="bookingDescription" rows="4" placeholder="Describe your booking..." required></textarea>
+
+      <button type="submit">Continue</button>
+    </form>
+  </div>
+</div>
