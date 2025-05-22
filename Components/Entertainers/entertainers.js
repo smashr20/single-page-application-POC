@@ -1,6 +1,6 @@
 console.log("easyhire.js: Script started");
 
-const showTalentDetails = (entertainer) => {
+const showTalentDetails_En = (entertainer) => {
   console.log("easyhire.js: Showing details for:", entertainer.name);
   const modal = document.getElementById("talentModal");
   const modalDetails = document.getElementById("modalTalentDetails");
@@ -141,7 +141,7 @@ bookingForm.onsubmit = (e) => {
   };
 };
 
-const loadEntertainers = () => {
+const loadEntertainers_En = () => {
   console.log("easyhire.js: Loading entertainers");
   const talentGrid = document.getElementById("talent-grid");
   if (!talentGrid) {
@@ -209,7 +209,7 @@ let entertainers = (data.entertainers || []).filter(ent => ent.role === "enterta
           </div>
         `;
         card.addEventListener("click", () => {
-          showTalentDetails(entertainer);
+          showTalentDetails_En(entertainer);
         });
         talentGrid.appendChild(card);
       });
@@ -231,13 +231,13 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error("easyhire.js: Content element with id 'content' not found");
   }
 
-  loadEntertainers();
+  loadEntertainers_En();
 
   if (content) {
     console.log("easyhire.js: Setting up MutationObserver");
     const observer = new MutationObserver(() => {
       console.log("easyhire.js: MutationObserver detected DOM change, HTML:", content.innerHTML);
-      loadEntertainers();
+      loadEntertainers_En();
     });
     observer.observe(content, { childList: true, subtree: true });
   } else {
@@ -247,10 +247,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (retryContent) {
         console.log("easyhire.js: Content element found on retry, HTML:", retryContent.innerHTML);
         clearInterval(interval);
-        loadEntertainers();
+        loadEntertainers_En();
         const observer = new MutationObserver(() => {
           console.log("easyhire.js: MutationObserver detected DOM change, HTML:", retryContent.innerHTML);
-          loadEntertainers();
+          loadEntertainers_En();
         });
         observer.observe(retryContent, { childList: true, subtree: true });
       }
@@ -261,6 +261,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 console.log("easyhire.js: Document readyState:", document.readyState);
 if (document.readyState === "complete" || document.readyState === "interactive") {
-  console.log("easyhire.js: DOM already loaded, running loadEntertainers");
-  loadEntertainers();
+  console.log("easyhire.js: DOM already loaded, running loadEntertainers_En");
+  loadEntertainers_En();
 }

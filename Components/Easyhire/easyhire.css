@@ -11,12 +11,13 @@
 }
 
 .talent-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    max-width: 600px;
-    margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  max-width: 1200px; /* optional */
+  margin: 0 auto;
 }
+
 
 .talent-card {
     position: relative;
