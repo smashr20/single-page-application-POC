@@ -381,4 +381,27 @@ if (usersCard) {
 
 </script>
 
+<script>
+  // Add this script at the beginning of your admin.html
+  document.addEventListener("DOMContentLoaded", () => {
+    // Check if user is logged in and has admin role
+    const isLoggedIn = localStorage.getItem("isLoggedin") === "true";
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    
+    if (!isLoggedIn || !user || user.role !== "admin") {
+      // Show alert for non-admin users
+      if (isLoggedIn && user) {
+        alert(`Access Denied. Your role (${user.role}) does not have admin privileges.`);
+      } else {
+        alert("Please login as admin to access this page.");
+      }
+      
+      // Clear local storage and redirect to home
+      localStorage.removeItem("isLoggedin");
+      localStorage.removeItem("loggedInUser");
+      window.location.href = "/";
+    }
+  });
+</script>
+
 </body>
