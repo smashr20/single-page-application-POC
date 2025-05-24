@@ -238,13 +238,20 @@ app.post('/api/book', (req, res) => {
 });
 
 
+const entertainerRoles = ["entertainer", "bands", "celebrities", "speakers", "services"];
+
 app.post("/api/get-bookings", (req, res) => {
   const { id, role } = req.body;
+  console.log("Received data -> id:", id, "role:", role);
+
+  if (!id || !role) {
+    return res.status(400).json({ error: "Missing id or role in request body" });
+  }
 
   let query = "";
   let params = [];
 
-  if (role === "entertainer") {
+  if (entertainerRoles.includes(role)) {
     query = `
       SELECT b.id, u.name AS customer, b.bookingDate, b.description, b.status
       FROM bookings b
