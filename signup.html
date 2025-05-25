@@ -1,64 +1,302 @@
-<section class="registration-form">
-    <div class="form-container">
-        <h2>Registration Form</h2>
-        <form id="registrationForm">
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="mobile">Mobile</label>
-                    <input type="tel" id="mobile" required>
-                </div>
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <style>
+            .registration-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 8rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.registration-title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 2rem;
+    font-size: 24px;
+}
+
+.registration-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-weight: 500;
+    color: #555;
+}
+
+.form-group input {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-actions {
+    grid-column: 1 / -1;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.save-btn {
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.save-btn:hover {
+    background-color: #0052a3;
+}
+
+@media (max-width: 768px) {
+    .registration-form {
+        grid-template-columns: 1fr;
+    }
+    
+    .registration-container {
+        margin: 1rem;
+        padding: 1rem;
+    }
+}
+        </style>
+</head>
+
+<body>
+  <div id="header"></div>
+  <div id="hero"></div>
+
+    <div class="signup-container">
+      
+<section class="registration-container">
+    <form class="registration-form">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" required>
+        </div>
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" id="address" required>
+        </div>
+        <div class="form-group">
+            <label for="country">Country</label>
+            <input type="text" id="country" required>
+        </div>
+        <div class="form-group">
+            <label for="state">State</label>
+            <input type="text" id="state" required>
+        </div>
+        <div class="form-group">
+            <label for="postcode">Postcode</label>
+            <input type="text" id="postcode" required>
+        </div>
+        <div class="form-group">
+            <label for="mobile">Mobile</label>
+            <input type="tel" id="mobile" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" required>
+        </div>
+        <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" required>
+        </div>
+           <!-- New Role Selector -->
+<div class="form-group">
+  <label for="role">Are you?</label>
+  <select id="role" required>
+    <option value="" disabled selected>Choose option</option>
+    <option value="customer">Customer</option>
+    <option value="entertainer">Entertainer</option>
+    <option value="bands">Bands</option>
+    <option value="celebrities">Celebrities</option>
+    <option value="services">Services</option>
+    <option value="speakers">Speakers</option>
+  </select>
+</div>
+
+        <div class="form-group">
+            <label for="website">Website</label>
+            <input type="url" id="website">
             </div>
-
-            <div class="form-group">
-                <label for="address">Address</label>
-                <input type="text" id="address" required>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="country">Country</label>
-                    <input type="text" id="country" required>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="state">State</label>
-                    <input type="text" id="state" required>
-                </div>
-                <div class="form-group">
-                    <label for="postcode">Postcode</label>
-                    <input type="text" id="postcode" required>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" required>
-                </div>
-                <div class="form-group">
-                    <label for="confirmPassword">Confirm Password</label>
-                    <input type="password" id="confirmPassword" required>
-                </div>
-            </div>
-
-        
-
-            <div class="form-group">
-                <label for="website">Website</label>
-                <input type="url" id="website">
-            </div>
-
-<button type="submit" class="submit-btn">Register</button>
-        </form>
-    </div>
+        <div class="form-actions">
+            <button type="submit" class="save-btn">Save & Register</button>
+        </div>
+ 
+    </form>
 </section>
+
+        </div>
+
+
+
+
+  <div id="footer"></div>
+
+  <script>
+    function loadHTML(id, file, callback) {
+      fetch(file)
+        .then(res => res.text())
+        .then(data => {
+          document.getElementById(id).innerHTML = data;
+          const cssFile = file.replace(".html", ".css");
+          if (!document.querySelector(`link[href="${cssFile}"]`)) {
+            fetch(cssFile, { method: "HEAD" }).then(resp => {
+              if (resp.ok) {
+                const link = document.createElement("link");
+                link.rel = "stylesheet";
+                link.href = cssFile;
+                document.head.appendChild(link);
+              }
+            });
+          }
+          if (callback) callback();
+        })
+        .catch(err => {
+          console.error(`Failed to load ${file}:`, err);
+          document.getElementById(id).innerHTML = `<p>Error loading ${id} content.</p>`;
+        });
+    }
+
+    function updateHeaderLinksForLogin() {
+      const isLoggedIn = localStorage.getItem("isLoggedin") === "true";
+      const user = JSON.parse(localStorage.getItem("loggedInUser"));
+
+      const signInLink = document.getElementById("nav-signin");
+      const signUpLink = document.getElementById("nav-signup");
+      const addListingLink = document.getElementById("nav-listing");
+      const userInfo = document.getElementById("user-info");
+      const userName = document.getElementById("user-name");
+      const profileImg = document.getElementById("profile-img-header");
+      const logoutBtn = document.getElementById("logout-btn");
+
+      if (isLoggedIn && user) {
+        if (signInLink) signInLink.style.display = "none";
+        if (signUpLink) signUpLink.style.display = "none";
+        if (addListingLink) addListingLink.style.display = "none";
+        if (userInfo && userName) {
+          userInfo.style.display = "flex";
+          userName.textContent = user.name;
+        }
+        if (profileImg) {
+          profileImg.onclick = () => {
+            history.pushState({}, "", "/dashboard");
+            location.reload();
+          };
+        }
+        if (logoutBtn) {
+          logoutBtn.addEventListener("click", () => {
+            localStorage.removeItem("loggedInUser");
+            localStorage.removeItem("isLoggedin");
+            history.pushState({}, "", "/");
+            location.reload();
+          });
+        }
+      } else {
+        if (signInLink) signInLink.style.display = "inline-block";
+        if (signUpLink) signUpLink.style.display = "inline-block";
+        if (addListingLink) addListingLink.style.display = "inline-block";
+        if (userInfo) userInfo.style.display = "none";
+      }
+    }
+
+    // Load reusable components
+    loadHTML("header", "./components/Header/header.html", updateHeaderLinksForLogin);
+    loadHTML("hero", "./components/Hero/hero.html", () => {
+      const searchContainer = document.querySelector(".search-container");
+      const joinUs = document.querySelector(".join-us-banner");
+      if (searchContainer) {
+        console.log("dashboard.html: Hiding .search-container");
+        searchContainer.style.display = "none";
+      } else {
+        console.warn("dashboard.html: .search-container not found");
+      }
+      if (joinUs) {
+        console.log("dashboard.html: Changing .join-us-banner text");
+        joinUs.querySelector("h1").textContent = "Join US"
+      } else {
+        console.warn("dashboard.html: .join-us-banner not found");
+      }
+    });
+    loadHTML("footer", "./components/Footer/footer.html");
+
+ 
+  </script>
+
+
+<script>
+  document.querySelector('.registration-form').addEventListener('submit', async function (e) {
+    e.preventDefault(); // Prevent default form submission
+
+    const userData = {
+      name: document.getElementById('name').value,
+      address: document.getElementById('address').value,
+      country: document.getElementById('country').value,
+      state: document.getElementById('state').value,
+      postcode: document.getElementById('postcode').value,
+      mobile: document.getElementById('mobile').value,
+      email: document.getElementById('email').value,
+      password: document.getElementById('password').value,
+      confirmPassword: document.getElementById('confirmPassword').value,
+      role: document.getElementById('role').value,
+      website: document.getElementById('website').value
+    };
+
+    // Optional: validate password and confirmPassword match
+    if (userData.password !== userData.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:3000/api/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("register.js: Server response:", data);
+
+      if (data.message) {
+        try {
+          localStorage.setItem("loggedInUser", JSON.stringify(data.user));
+          localStorage.setItem("isLoggedin", "true");
+        } catch (e) {
+          console.warn("register.js: Could not save to localStorage", e);
+        }
+        alert("Registration successful!");
+        window.location.href = "/dashboard.html";
+      } else {
+        throw new Error(data.error || "Unknown server error");
+      }
+
+    } catch (error) {
+      console.error("Error during registration:", error);
+      alert("User already register.");
+    }
+  });
+</script>

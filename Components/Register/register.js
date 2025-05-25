@@ -1,68 +1,119 @@
-console.log("register.js: Script started"); // Debug: Confirm script starts
+console.log("register.js: Script started");
 
+function init() {
+  console.log("register.js: Initializing script");
 
-  console.log("register.js: DOMContentLoaded fired"); // Debug: Confirm DOM is loaded
-  const form = document.querySelector(".registration-form");
-  if (form) {
-    console.log("register.js: Form found:", form); // Debug: Confirm form is found
-   form.addEventListener("submit", (event) => {
-  event.preventDefault();
-  console.log("register.js: Submitting to /api/signup");
-
-  const formData = {
-    name: document.getElementById("name").value,
-    address: document.getElementById("address").value,
-    country: document.getElementById("country").value,
-    state: document.getElementById("state").value,
-    postcode: document.getElementById("postcode").value,
-    mobile: document.getElementById("mobile").value,
-    email: document.getElementById("email").value,
-    password: document.getElementById("password").value,
-    confirmPassword: document.getElementById("confirmPassword").value,
-    website: document.getElementById("website").value,
-    role: document.getElementById("role")?.value || "customer" // default to customer
-  };
-
-  fetch("http://localhost:3000/api/signup", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(formData)
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.message) {
-      console.log("data",data);
-       localStorage.setItem("loggedInUser", JSON.stringify(data.user));
-      localStorage.setItem("isLoggedin", "true");
-
-      console.log("register.js: Signup successful");
-      alert("Registration successful!");
-      // form.reset();
-    history.pushState({}, "", "/dashboard.html");
-    window.location.href = "/dashboard.html";  // This will reload the page
-    } else {
-      console.warn("register.js: Server error", data.error);
-      alert("Error: " + (data.error || "Unknown error"));
+  // Check if already logged in (with private browsing fallback)
+  try {
+    const isLoggedIn = localStorage.getItem("isLoggedin") === "true";
+    if (isLoggedIn) {
+      console.log("register.js: User already logged in, redirecting to dashboard");
+      window.location.href = "/dashboard.html";
+      return;
     }
-  })
-  .catch(err => {
-    console.error("register.js: Network error", err);
-    alert("Network error. Try again later.");
-  });
-});
-
-    // Additional debug: Log button click directly
-    const button = document.querySelector(".save-btn");
-    if (button) {
-      console.log("register.js: Button found:", button); // Debug: Confirm button is found
-      button.addEventListener("click", () => {
-        console.log("register.js: Save & Register button clicked (direct click event)!"); // Debug: Confirm button click
-      });
-    } else {
-      console.error("register.js: Button with class 'save-btn' not found");
-    }
-  } else {
-    console.error("register.js: Form with class 'registration-form' not found");
+  } catch (e) {
+    console.warn("register.js: LocalStorage access error (private browsing?)", e);
   }
+
+  const form = document.querySelector(".registration-form");
+  if (!form) {
+    console.error("register.js: Form with class 'registration-form' not found");
+    return;
+  }
+  console.log("register.js: Form found:", form);
+
+  // Form submission handler
+  async function handleFormSubmit(event) {
+    event.preventDefault();
+    console.log("register.js: Form submit event triggered");
+
+    const submitButton = form.querySelector(".save-btn");
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = "Processing...";
+    }
+
+    try {
+      const formData = {
+        name: document.getElementById("name")?.value.trim() || "",
+        address: document.getElementById("address")?.value.trim() || "",
+        country: document.getElementById("country")?.value.trim() || "",
+        state: document.getElementById("state")?.value.trim() || "",
+        postcode: document.getElementById("postcode")?.value.trim() || "",
+        mobile: document.getElementById("mobile")?.value.trim() || "",
+        email: document.getElementById("email")?.value.trim() || "",
+        password: document.getElementById("password")?.value || "",
+        confirmPassword: document.getElementById("confirmPassword")?.value || "",
+        website: document.getElementById("website")?.value.trim() || "",
+        role: document.getElementById("role")?.value || "customer",
+      };
+
+      // Client-side validation
+      if (!formData.email || !formData.password) {
+        throw new Error("Email and password are required");
+      }
+      if (formData.password !== formData.confirmPassword) {
+        throw new Error("Passwords do not match");
+      }
+
+      console.log("register.js: Submitting to /api/signup", formData);
+
+      const response = await fetch("http://localhost:3000/api/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("register.js: Server response:", data);
+
+      if (data.message) {
+        try {
+          localStorage.setItem("loggedInUser", JSON.stringify(data.user));
+          localStorage.setItem("isLoggedin", "true");
+        } catch (e) {
+          console.warn("register.js: Could not save to localStorage", e);
+        }
+        alert("Registration successful!");
+        window.location.href = "/dashboard.html";
+      } else {
+        throw new Error(data.error || "Unknown server error");
+      }
+    } catch (err) {
+      console.error("register.js: Error during registration:", err);
+      alert(`Error: ${err.message}`);
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = "Save & Register";
+      }
+    }
+  }
+
+  // Set up form submission
+  form.addEventListener("submit", handleFormSubmit);
+
+  // Button click handler (for debugging)
+  const button = document.querySelector(".save-btn");
+  if (button) {
+    console.log("register.js: Button found:", button);
+    button.addEventListener("click", (event) => {
+      console.log("register.js: Button clicked, triggering form submission");
+      form.requestSubmit();
+    });
+  } else {
+    console.error("register.js: Button with class 'save-btn' not found");
+  }
+}
+
+// Initialize when DOM is ready
+if (document.readyState === "complete" || document.readyState === "interactive") {
+  init();
+} else {
+  document.addEventListener("DOMContentLoaded", init);
+}
