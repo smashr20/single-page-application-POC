@@ -22,7 +22,7 @@ const showTalentDetails_cele = (entertainer) => {
   // Populate modal with all entertainer details and Book Now button
   const photoUrl = entertainer.profilePhoto
     ? `http://localhost:3000${entertainer.profilePhoto}`
-    : "https://i.pravatar.cc/100";
+    : "https://t3.ftcdn.net/jpg/05/79/68/24/360_F_579682465_CBq4AWAFmFT1otwioF5X327rCjkVICyH.jpg";
   modalDetails.innerHTML = `
     <div style="text-align: center;">
       <img src="${photoUrl}" alt="${entertainer.name}" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem;">
@@ -199,7 +199,7 @@ let entertainers = (data.entertainers || []).filter(ent => ent.role === "celebri
         card.className = "talent-card";
         const photoUrl = entertainer.profilePhoto
           ? `http://localhost:3000${entertainer.profilePhoto}`
-          : "https://i.pravatar.cc/100";
+          : "https://t3.ftcdn.net/jpg/05/79/68/24/360_F_579682465_CBq4AWAFmFT1otwioF5X327rCjkVICyH.jpg";
         card.style.backgroundImage = `url('${photoUrl}')`;
         card.innerHTML = `
           <div class="talent-info">
