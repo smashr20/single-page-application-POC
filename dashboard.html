@@ -112,7 +112,7 @@
 
 
   <div id="footer"></div>
-
+<script src="url-config.js"></script>
   <script>
     function loadHTML(id, file, callback) {
       fetch(file)
@@ -218,7 +218,8 @@
           const userId = JSON.parse(localStorage.getItem("loggedInUser"))?.id;
           if (!userId) return alert("User not found in session.");
 
-          fetch("http://localhost:3000/api/get-profile", {
+          //fetch("http://localhost:3000/api/get-profile", {
+          fetch("api/get-profile.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ id: userId })
@@ -270,7 +271,8 @@
             website: document.getElementById("editWebsite").value
           };
 
-          fetch("http://localhost:3000/api/update-profile", {
+          fetch("api/update-profile.php", {
+          //fetch("http://localhost:3000/api/update-profile", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
@@ -356,7 +358,8 @@ const userId = user?.id;
 const role = user?.role;
 
           try {
-            const res = await fetch("http://localhost:3000/api/get-bookings", {
+            const res = await fetch(`api/get-booking.php`, {
+            //const res = await fetch("http://localhost:3000/api/get-bookings", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ id: userId,role })
@@ -435,8 +438,8 @@ const role = user?.role;
 
     const bookingId = document.getElementById("bookingId").value;
     const status = document.getElementById("bookingStatus").value;
-
-    fetch("http://localhost:3000/api/update-booking", {
+    fetch("api/update-booking.php", {
+    //fetch("http://localhost:3000/api/update-booking", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: bookingId, status })
