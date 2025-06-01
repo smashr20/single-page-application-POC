@@ -1,4 +1,3 @@
-console.log("login.js: Script started");
 
 // Define attachListeners at top level
 const attachListeners = () => {
@@ -8,12 +7,13 @@ const attachListeners = () => {
     console.log("login.js: Form found:", form);
     form.addEventListener("submit", (event) => {
       event.preventDefault();
-      console.log("login.js: Login button clicked (submit event)!");
+      console.log("login.js: Login button clicked (submit eventttt)!");
 
       const email = document.getElementById("login_email").value;
       const password = document.getElementById("login_password").value;
 
-      fetch("http://localhost:3000/api/login", {
+      fetch("api/user-login.php", {
+     // fetch("http://localhost:3000/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password })
