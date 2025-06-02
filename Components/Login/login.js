@@ -1,5 +1,5 @@
 
-// Define attachListeners at top level
+// Define attachListeners at top level Just for file changes
 const attachListeners = () => {
   console.log("login.js: Running attachListeners");
   const form = document.getElementById("login-form");
