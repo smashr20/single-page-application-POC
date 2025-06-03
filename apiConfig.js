@@ -36,7 +36,7 @@ function hideSpinner() {
     });
 }
 
-const API_BASE_URL = 'http://localhost:3000'; // Update with your API base URL
+const API_BASE_URL = 'https://single-page-application-poc.onrender.com'; // Update with your API base URL
 
 /**
  * Makes an AJAX call and shows a spinner during the request.

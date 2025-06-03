@@ -58,7 +58,7 @@ function init() {
 
       console.log("register.js: Submitting to /api/signup", formData);
 
-      const response = await fetch("http://localhost:3000/api/signup", {
+      const response = await fetch("https://single-page-application-poc.onrender.com/api/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

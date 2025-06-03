@@ -218,7 +218,7 @@
           const userId = JSON.parse(localStorage.getItem("loggedInUser"))?.id;
           if (!userId) return alert("User not found in session.");
 
-          fetch("http://localhost:3000/api/get-profile", {
+          fetch("https://single-page-application-poc.onrender.com/api/get-profile", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ id: userId })
@@ -235,7 +235,7 @@
                 document.getElementById("editWebsite").value = data.user.website || "";
                 const preview = document.getElementById("previewPhoto");
                 preview.src = data.user.profilePhoto && data.user.profilePhoto.trim() !== ""
-                  ? "http://localhost:3000" + data.user.profilePhoto
+                  ? "https://single-page-application-poc.onrender.com" + data.user.profilePhoto
                   : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg";
                 profileModal.style.display = "flex";
               } else {
@@ -270,7 +270,7 @@
             website: document.getElementById("editWebsite").value
           };
 
-          fetch("http://localhost:3000/api/update-profile", {
+          fetch("https://single-page-application-poc.onrender.com/api/update-profile", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
@@ -317,7 +317,7 @@
             formData.append("id", userId);
             formData.append("profilePhoto", file);
 
-            fetch("http://localhost:3000/api/upload-photo", {
+            fetch("https://single-page-application-poc.onrender.com/api/upload-photo", {
               method: "POST",
               body: formData
             })
@@ -356,7 +356,7 @@ const userId = user?.id;
 const role = user?.role;
 
           try {
-            const res = await fetch("http://localhost:3000/api/get-bookings", {
+            const res = await fetch("https://single-page-application-poc.onrender.com/api/get-bookings", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ id: userId,role })
@@ -436,7 +436,7 @@ const role = user?.role;
     const bookingId = document.getElementById("bookingId").value;
     const status = document.getElementById("bookingStatus").value;
 
-    fetch("http://localhost:3000/api/update-booking", {
+    fetch("https://single-page-application-poc.onrender.com/api/update-booking", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: bookingId, status })
@@ -476,7 +476,7 @@ if (messagesCard) {
     if (!userId) return alert("User not logged in");
 
     try {
-      const res = await fetch("http://localhost:3000/api/get-booking-messages", {
+      const res = await fetch("https://single-page-application-poc.onrender.com/api/get-booking-messages", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ bookingId, userId })
