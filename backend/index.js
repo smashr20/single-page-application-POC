@@ -7,7 +7,7 @@ const app = express();
 const port = 3000;
 
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://your-frontend.onrender.com'], // add your frontend URL here
+  origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true
 };
@@ -30,6 +30,8 @@ app.get('/', async (req, res) => {
 });
 
 app.get('/api/setup', (req, res) => {
+    console.log("Request body received:", req.body); // See what’s really coming
+
   createAllTables((err, message) => {
     if (err) {
       console.error("Setup failed:", err.message);
