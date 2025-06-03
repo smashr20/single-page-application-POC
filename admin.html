@@ -182,7 +182,7 @@
 
     document.addEventListener("DOMContentLoaded", () => {
       // Load summary stats
-fetch("https://single-page-application-poc.onrender.com/api/stats-summary")
+fetch("https://single-page-application-poc-1.onrender.com/api/stats-summary")
   .then(res => res.json())
   .then(data => {
     document.getElementById("totalBookings").textContent = data.totalBookings || 0;
@@ -210,7 +210,7 @@ fetch("https://single-page-application-poc.onrender.com/api/stats-summary")
           const userId = JSON.parse(localStorage.getItem("loggedInUser"))?.id;
           if (!userId) return alert("User not found in session.");
 
-          fetch("https://single-page-application-poc.onrender.com/api/get-profile", {
+          fetch("https://single-page-application-poc-1.onrender.com/api/get-profile", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ id: userId })
@@ -227,7 +227,7 @@ fetch("https://single-page-application-poc.onrender.com/api/stats-summary")
                 document.getElementById("editWebsite").value = data.user.website || "";
                 const preview = document.getElementById("previewPhoto");
                 preview.src = data.user.profilePhoto && data.user.profilePhoto.trim() !== ""
-                  ? "https://single-page-application-poc.onrender.com" + data.user.profilePhoto
+                  ? "https://single-page-application-poc-1.onrender.com" + data.user.profilePhoto
                   : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg";
                 profileModal.style.display = "flex";
               } else {
@@ -262,7 +262,7 @@ fetch("https://single-page-application-poc.onrender.com/api/stats-summary")
             website: document.getElementById("editWebsite").value
           };
 
-          fetch("https://single-page-application-poc.onrender.com/api/update-profile", {
+          fetch("https://single-page-application-poc-1.onrender.com/api/update-profile", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
@@ -309,7 +309,7 @@ fetch("https://single-page-application-poc.onrender.com/api/stats-summary")
             formData.append("id", userId);
             formData.append("profilePhoto", file);
 
-            fetch("https://single-page-application-poc.onrender.com/api/upload-photo", {
+            fetch("https://single-page-application-poc-1.onrender.com/api/upload-photo", {
               method: "POST",
               body: formData
             })
@@ -352,7 +352,7 @@ if (usersCard) {
       return;
     }
 
-    fetch("https://single-page-application-poc.onrender.com/api/get-users")
+    fetch("https://single-page-application-poc-1.onrender.com/api/get-users")
       .then(res => res.json())
       .then(data => {
         usersTableBody.innerHTML = "";
@@ -365,7 +365,7 @@ if (usersCard) {
             <td>${user.email}</td>
             <td>${user.mobile}</td>
             <td>${user.address}, ${user.state}, ${user.country}, ${user.postcode}</td>
-            <td><img src="${user.profilePhoto ? 'https://single-page-application-poc.onrender.com' + user.profilePhoto : 'https://i.pravatar.cc/40'}" alt="Photo" width="40" height="40" style="border-radius:50%; object-fit:cover;"></td>
+            <td><img src="${user.profilePhoto ? 'https://single-page-application-poc-1.onrender.com' + user.profilePhoto : 'https://i.pravatar.cc/40'}" alt="Photo" width="40" height="40" style="border-radius:50%; object-fit:cover;"></td>
           `;
           usersTableBody.appendChild(row);
         });

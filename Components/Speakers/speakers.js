@@ -23,7 +23,7 @@ const showTalentDetails_speaker = (entertainer) => {
 
   // Populate modal with all entertainer details and Book Now button
   const photoUrl = entertainer.profilePhoto
-    ? `https://single-page-application-poc.onrender.com${entertainer.profilePhoto}`
+    ? `https://single-page-application-poc-1.onrender.com${entertainer.profilePhoto}`
     : "https://t3.ftcdn.net/jpg/05/79/68/24/360_F_579682465_CBq4AWAFmFT1otwioF5X327rCjkVICyH.jpg";
   modalDetails.innerHTML = `
     <div style="text-align: center;">
@@ -102,7 +102,7 @@ bookingForm.onsubmit = (e) => {
     status: "pending"
   };
 
-  fetch("https://single-page-application-poc.onrender.com/api/book", {
+  fetch("https://single-page-application-poc-1.onrender.com/api/book", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload)
@@ -151,7 +151,7 @@ const loadEntertainers_speaker = () => {
     return;
   }
 
-  fetch("https://single-page-application-poc.onrender.com/api/entertainers", {
+  fetch("https://single-page-application-poc-1.onrender.com/api/entertainers", {
     method: "GET",
     headers: { "Content-Type": "application/json" }
   })
@@ -200,7 +200,7 @@ let entertainers = (data.entertainers || []).filter(ent => ent.role === "speaker
         const card = document.createElement("div");
         card.className = "talent-card";
         const photoUrl = entertainer.profilePhoto
-          ? `https://single-page-application-poc.onrender.com${entertainer.profilePhoto}`
+          ? `https://single-page-application-poc-1.onrender.com${entertainer.profilePhoto}`
           : "https://t3.ftcdn.net/jpg/05/79/68/24/360_F_579682465_CBq4AWAFmFT1otwioF5X327rCjkVICyH.jpg";
         card.style.backgroundImage = `url('${photoUrl}')`;
         card.innerHTML = `
