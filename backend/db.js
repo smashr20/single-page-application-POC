@@ -7,7 +7,9 @@ const db = mysql.createConnection({
   user: 'root',
   password: 'GCgwzyyozBEXPTMZvMrOujkPObFhOITX',
   database: 'railway',
-  multipleStatements: true // ← THIS FIXES IT
+  multipleStatements: true,
+  connectionLimit: 10,
+  queueLimit: 0
 
 });
 
@@ -72,6 +74,9 @@ db.connect(err => {
     } else {
       console.log('✅ Tables created or already exist');
     }
-    db.end();
+    // db.end();
   });
 });
+
+
+module.exports = db;

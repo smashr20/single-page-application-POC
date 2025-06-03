@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const db = require('./db'); // ← import MySQL connection
+const db = require('./db');
 const uploadRoute = require('./upload');
 
 const app = express();
@@ -205,7 +205,7 @@ app.post('/api/update-profile', (req, res) => {
 });
 
 
-app.get("/api/entertainers", (req, res) => {
+app.get('/api/entertainers', (req, res) => {
   const query = `
     SELECT id, name, address, country, state, postcode, mobile, email, website, role, profilePhoto
     FROM users
